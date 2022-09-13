@@ -1,0 +1,10 @@
+.delete-btn{
+    margin:auto;
+    display:block;
+}
+
+.table-head th {
+    text-align: center;
+    background-color: #00a000;
+    color: white;
+}

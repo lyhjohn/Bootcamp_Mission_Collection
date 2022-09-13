@@ -1,0 +1,16 @@
+   
+.inline-element{display: inline-block;}
+
+.table-head th{
+    text-align: center;
+    background-color: #00a000;
+    color: white;
+}
+
+.array-center{
+    text-align: center;
+}
+
+
+
+    
