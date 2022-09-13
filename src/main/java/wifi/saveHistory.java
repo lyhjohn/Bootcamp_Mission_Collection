@@ -1,10 +1,9 @@
-package WIFI;
+package wifi;
 
 import dto.historyDto;
 import dto.wifiDto;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

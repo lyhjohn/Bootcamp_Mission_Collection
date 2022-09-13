@@ -1,4 +1,4 @@
-package WIFI;
+package wifi;
 
 
 import com.google.gson.JsonArray;

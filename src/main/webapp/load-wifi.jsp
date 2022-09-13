@@ -1,4 +1,4 @@
-<%@page import="WIFI.wifiService" %>
+<%@page import="wifi.wifiService" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>

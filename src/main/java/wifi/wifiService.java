@@ -1,4 +1,4 @@
-package WIFI;
+package wifi;
 
 
 import dto.wifiDto;
@@ -111,6 +111,7 @@ public class wifiService {
         String url = "jdbc:mariadb://localhost/wifi";
         String dbUserId = "WIFI_user";
         String dbPassword = "yohan";
+
 
         Connection connection;
         ResultSet rs = null;

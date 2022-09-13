@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dto.wifiDto" %>
 <%@ page import="dto.historyDto" %>
-<%@ page import="WIFI.wifiService" %>
+<%@ page import="wifi.wifiService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>

@@ -1,6 +1,5 @@
-package WIFI;
+package wifi;
 
-import dto.historyDto;
 import dto.wifiDto;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package dto;
 
-import WIFI.api_List;
+import wifi.api_List;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

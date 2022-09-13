@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>WIFI.Controller</servlet-class>
+        <servlet-class>wifi.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
