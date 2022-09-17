@@ -1,7 +1,7 @@
-package wifi;
+package com.example.mission1.wifi;
 
 
-import dto.wifiDto;
+import com.example.mission1.dto.wifiDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,13 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 public class wifiService {
-
-    /**
-     *
-     * @param lat
-     * @param lnt
-     * @return 근처 와이파이 목록을 띄워주고 히스토리 목록에 저장하는 부분 담당.
-     */
     public List<wifiDto> WIFI_Select(String lat, String lnt) throws ClassNotFoundException, SQLException {
 
         List<wifiDto> wifiList = new ArrayList<>();

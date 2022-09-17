@@ -1,11 +1,11 @@
-package wifi;
+package com.example.mission1.wifi;
 
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dto.wifiDto;
+import com.example.mission1.dto.wifiDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,25 +36,4 @@ public class api_List {
 
         return dtoList;
     }
-
-
-
-//    public JsonArray getRows(String url) {
-//        JsonObject jsonObject = JsonParser.parseString(url).getAsJsonObject();
-//        JsonObject result = jsonObject.getAsJsonObject("TbPublicWifiInfo");
-//
-//        return result.get("row").getAsJsonArray();
-//    }
-//
-//    public int getCount(String url) {
-//        int count = JsonParser.parseString(url).getAsJsonObject()
-//                .get("TbPublicWifiInfo")
-//                .getAsJsonObject()
-//                .get("list_total_count")
-//                .getAsInt();
-//
-//        System.out.println(count);
-//
-//        return count;
-//    }
 }

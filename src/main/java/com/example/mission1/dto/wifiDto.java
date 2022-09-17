@@ -1,6 +1,6 @@
-package dto;
+package com.example.mission1.dto;
 
-import wifi.api_List;
+import com.example.mission1.wifi.api_List;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

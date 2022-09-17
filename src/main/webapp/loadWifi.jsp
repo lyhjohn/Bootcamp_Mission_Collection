@@ -1,5 +1,6 @@
-<%@page import="wifi.wifiService" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="com.example.mission1.wifi.wifiService" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -8,10 +9,8 @@
     <meta charset="UTF-8">
     <title>와이파이 정보 구하기</title>
     <link rel="stylesheet"href="${pageContext.request.contextPath}/resources/css/wifiPrint.css"/>
-
 </head>
-<%--Open API 와이파이 정보를 DB에 insert하는 코드를 구현했습니다.
-컨트롤러를 거치지 않고 바로 wifiService 클래스로 이동하여 insert 부분을 실행합니다. --%>
+
 <body>
 <%
     wifiService ws = new wifiService();

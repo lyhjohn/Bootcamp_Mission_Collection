@@ -1,7 +1,7 @@
-package wifi;
+package com.example.mission1.wifi;
 
-import dto.historyDto;
-import dto.wifiDto;
+import com.example.mission1.dto.historyDto;
+import com.example.mission1.dto.wifiDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

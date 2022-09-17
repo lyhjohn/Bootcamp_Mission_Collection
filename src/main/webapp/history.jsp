@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="dto.wifiDto" %>
-<%@ page import="dto.historyDto" %>
-<%@ page import="wifi.wifiService" %>
+<%@ page import="com.example.mission1.dto.wifiDto" %>
+<%@ page import="com.example.mission1.dto.historyDto" %>
+<%@ page import="com.example.mission1.wifi.wifiService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
 |
 <a href="${pageContext.request.contextPath}/WIFI/history">위치 히스토리 목록</a>
 |
-<a href="${pageContext.request.contextPath}/load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+<a href="${pageContext.request.contextPath}/loadWifi.jsp">Open API 와이파이 정보 가져오기</a>
 
 
 <table>

@@ -1,9 +1,8 @@
 
-<%@ page import="dto.wifiDto" %>
+<%@ page import="com.example.mission1.dto.wifiDto" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%--메인 화면입니다.--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +28,7 @@
 |
 <a href="${pageContext.request.contextPath}/WIFI/history">위치 히스토리 목록</a>
 |
-<a href="${pageContext.request.contextPath}/load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+<a href="${pageContext.request.contextPath}/loadWifi.jsp">Open API 와이파이 정보 가져오기</a>
 
 
 <br>

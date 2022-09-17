@@ -1,6 +1,6 @@
-package wifi;
+package com.example.mission1.wifi;
 
-import dto.wifiDto;
+import com.example.mission1.dto.wifiDto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,12 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-/**
- * 1. 근처 와이파이 정보 보기,
- * 2. 위치 히스토리 목록 가져오기
- * 위 두 서비스와 연결된 컨트롤러
- */
 public class Controller extends HttpServlet {
 
     @Override

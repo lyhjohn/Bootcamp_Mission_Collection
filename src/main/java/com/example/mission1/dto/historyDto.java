@@ -1,4 +1,4 @@
-package dto;
+package com.example.mission1.dto;
 
 import lombok.Getter;
 import lombok.Setter;
