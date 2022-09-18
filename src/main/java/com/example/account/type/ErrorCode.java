@@ -21,7 +21,7 @@ public enum ErrorCode {
 	AMOUNT_EXCEED_BALANCE("거래 금액이 계좌 잔액보다 큽니다."),
 	TRANSACTION_NOT_FOUND("해당 거래가 없습니다."),
 	TRANSACTION_ACCOUNT_UN_MATCH("이 거래는 해당 계좌에서 발생한 거래가 아닙니다."),
-	CANCEL_MUST_FULLY("부분 취는 허용되지 않습니다."),
+	CANCEL_MUST_FULLY("부분 취소는 허용되지 않습니다."),
 	TOO_OLD_ORDER_TO_CANCEL("1년이 지난 거래는 취소가 불가능합니다."),
 	TOO_LARGE_CANCEL_AMOUNT("취소하려는 금액이 지불한 금액보다 큽니다.")
 	;

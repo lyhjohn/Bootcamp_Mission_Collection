@@ -18,11 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Transaction {
-
-    @Id
-    @GeneratedValue
-    private Long id; // id가 domain들에 공통적으로 들어가므로, 부모클래스를 만들어서 id를 넣고 이를 상속받는 클래스로 도메인을 만들어도 됨
+public class Transaction extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
@@ -37,8 +33,4 @@ public class Transaction {
     private String transactionId;
     private LocalDateTime transactedAt;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 }

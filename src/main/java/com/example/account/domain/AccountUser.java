@@ -2,10 +2,7 @@ package com.example.account.domain;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,16 +22,6 @@ import lombok.Setter;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class AccountUser { // 쿼리문은 data.sql로 만들었음
-	@Id
-	@GeneratedValue
-	private Long id;
-
+public class AccountUser extends BaseEntity {// 쿼리문은 data.sql로 만들었음
 	private String name;
-	
-	@CreatedDate
-	private LocalDateTime createdAt;
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
-	
 }

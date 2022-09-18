@@ -22,10 +22,7 @@ import com.example.account.type.AccountStatus;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Account {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Account extends BaseEntity {
 
     @ManyToOne
     private AccountUser accountUser;
@@ -39,11 +36,6 @@ public class Account {
     private LocalDateTime unRegisteredAt;
 
     private Long payAmount;
-
-    @CreatedDate
-	private LocalDateTime createdAt;
-    @LastModifiedDate
-	private LocalDateTime updatedAt;
 
     public void useBalance(Long amount) {
         if (amount > balance) {
