@@ -1,7 +1,7 @@
 package mission.fastlmsmission.member.exception;
 
-public class MemberNotEmailAuthException extends RuntimeException {
-    public MemberNotEmailAuthException(String error) {
+public class MemberStopUserException extends RuntimeException {
+    public MemberStopUserException(String error) {
         super(error);
     }
 }

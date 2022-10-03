@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>강의 등록 페이지</title>
+    <style>
+        .detail table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .detail table th, .detail table td {
+            border: 1px solid #444444;
+        }
+
+        .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button button {
+            font-size: 15px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>강의 등록</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<div class="detail">
+    <form method="post">
+        <table>
+            <tbody>
+            <tr>
+                <th>강좌명:</th>
+                <td>
+                    <label for="editMode"></label>
+                    <input type="text" th:value="${course.subject}" name="subject" id="editMode" placeholder="강의명 입력"
+                           required>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button">
+            <button th:if="${!editMode}" type="submit">강좌 등록 하기</button>
+            <button th:if="${editMode}" type="submit">강좌 수정 하기</button>
+            <a href="/admin/course/list.do">목록으로</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 강의 관리</title>
+    <style>
+        .list table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid #444444;
+        }
+        .pager {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .pager a.on {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>강의 관리</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<div>
+    <a href="/admin/course/add.do">강의 등록</a>
+</div>
+<div class="list">
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>강의명</th>
+        <th>등록일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.seq}"></td>
+        <td>
+            <p>
+                <a th:href="@{edit.do(id=${course.id})}" th:text="${course.subject}"></a>
+            </p>
+        </td>
+        <td th:text="${course.regDt}"></td>
+    </tr>
+    </tbody>
+</table>
+    <div class="pager" th:utext="${pager}"></div>
+</div>
+
+</body>
+</html>

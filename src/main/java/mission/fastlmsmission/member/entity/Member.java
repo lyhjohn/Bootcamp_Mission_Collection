@@ -1,9 +1,6 @@
-package mission.fastlmsmission.member.domain;
+package mission.fastlmsmission.member.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.ReadOnlyProperty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member implements MemberCode{
 
     @Id
     private String email;
@@ -34,6 +31,8 @@ public class Member {
     // 관리자 도메인을 새로 만들지, 멤버에 관리자여부 필드를 추가할지?
     // 등급에따라 회원 ROLE을 구분할건지
     private boolean adminYn;
+    
+    private String userStatus; //이용가능, 정지
 
 
 

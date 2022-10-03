@@ -1,4 +1,4 @@
-package mission.fastlmsmission.controller;
+package mission.fastlmsmission.main.controller;
 
 import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.components.MailComponents;
@@ -25,6 +25,18 @@ public class MainController {
 
         return "index";
     }
+
+
+    @RequestMapping("/error/denied")
+    public String errorDenied() {
+
+        return "error/denied";
+    }
+
+//    @GetMapping("/index")
+//    public String home() {
+//        return "redirect:/";
+//    }
 
 
 

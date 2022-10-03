@@ -1,5 +1,6 @@
-package mission.fastlmsmission;
+package mission.fastlmsmission.configuration;
 
+import mission.fastlmsmission.FastlmsMissionApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

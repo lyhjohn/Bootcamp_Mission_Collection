@@ -1,16 +1,16 @@
-package mission.fastlmsmission.member.repository;
+package mission.fastlmsmission.admin.repository;
 
+import mission.fastlmsmission.admin.entity.Category;
 import mission.fastlmsmission.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
-    Optional<Member> findByEmailAuthKey(String emailAuthKey);
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+    Optional<Category> findByCategoryName(String categoryName);
 
-    Optional<Member> findByEmailAndUserName(String email, String userName);
-
-    @Query("select m from Member m where m.resetPasswordKey = :uuid")
-    Optional<Member> findByResetPasswordKey(String uuid);
+    @Query("select c from Category c order by c.sortValue desc")
+    List<Category> findAll ();
 }
