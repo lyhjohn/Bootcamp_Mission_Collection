@@ -5,12 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mission.fastlmsmission.course.entity.Course;
-import org.springframework.util.CollectionUtils;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,51 +16,50 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseDto {
-    @Id
-    @GeneratedValue
-    private Long id;
 
-    private String imagePath;
-    private String keyword;
-    private String subject;
+    Long id;
 
-    @Column(length = 1000)
-    private String summary;
+    String imagePath;
+    String keyword;
+    String subject;
 
-    @Lob // 대용량 데이터 저장(longtext 타입)
-    private String contents;
-    private Long price;
-    private Long salePrice;
-    private LocalDateTime saleEndDt;
-    private LocalDateTime regDt;
-    private LocalDateTime udtDt; // 업데이트 날짜
+    String summary;
+
+    String contents;
+    Long price;
+    Long salePrice;
+    LocalDate saleEndDt;
+    LocalDateTime regDt;
+    LocalDateTime udtDt; // 업데이트 날짜
     long totalCount;
     long seq;
-
+    Long categoryId;
 
 
     public static CourseDto of(Course course) {
         return CourseDto.builder()
                 .id(course.getId())
+                .categoryId(course.getCategoryId())
                 .imagePath(course.getImagePath())
                 .keyword(course.getKeyword())
+                .subject(course.getSubject())
+                .summary(course.getSummary())
                 .contents(course.getContents())
                 .price(course.getPrice())
                 .salePrice(course.getSalePrice())
                 .saleEndDt(course.getSaleEndDt())
-                .summary(course.getSummary())
-                .subject(course.getSubject())
                 .regDt(course.getRegDt())
                 .udtDt(course.getUdtDt())
                 .build();
     }
 
-    public static List<CourseDto> ofList(List<Course> courses) {
-        if (!CollectionUtils.isEmpty(courses)) {
-            List<CourseDto> courseList = new ArrayList<>();
-            courses.forEach(course -> courseList.add(CourseDto.of(course)));
-            return courseList;
+    public static List<CourseDto> of(List<Course> courses) {
+        if (courses == null) {
+            return null;
         }
-        return null;
+
+        List<CourseDto> courseList = new ArrayList<>();
+        courses.forEach(course -> courseList.add(CourseDto.of(course)));
+        return courseList;
     }
 }

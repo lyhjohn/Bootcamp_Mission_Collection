@@ -25,7 +25,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     UserAuthenticationFailureHandler getFailureHandler() {
         return new UserAuthenticationFailureHandler();
@@ -35,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
+        http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
                 .antMatchers("/",

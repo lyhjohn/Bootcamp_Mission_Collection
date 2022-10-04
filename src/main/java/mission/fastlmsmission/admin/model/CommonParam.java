@@ -16,12 +16,13 @@ public class CommonParam {
      * limit 20, 10 -> pageIndex: 3
      * limit 30, 10 -> pageIndex: 4
      */
-    public long getStartDataNum() { // 페이지 인덱스를 선택했을 때 몇번 데이터부터 보여줄지 정한다. limit x, y에서 x에 해당
+    public long getPageStart() { // 페이지 인덱스를 선택했을 때 몇번 데이터부터 보여줄지 정한다. limit x, y에서 x에 해당
         init();
         return (pageIndex - 1) * pageSize;
     }
 
-    public long getPageSize() { // limit x, y에서 y 담당
+
+    public long getPageEnd() { // limit x, y에서 y 담당
         init();
         return pageSize;
     }

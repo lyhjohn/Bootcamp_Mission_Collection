@@ -11,4 +11,7 @@ public interface CategoryService {
     boolean add(String categoryName);
     boolean update(CategoryInput parameter);
     boolean delete(long id);
+
+    // 프론트 카테고리 정보
+    List<CategoryDto> frontList(CategoryDto parameter);
 }

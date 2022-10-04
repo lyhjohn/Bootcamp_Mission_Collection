@@ -1,6 +1,8 @@
 package mission.fastlmsmission.course.controller;
 
 import lombok.RequiredArgsConstructor;
+import mission.fastlmsmission.admin.dto.CategoryDto;
+import mission.fastlmsmission.admin.service.CategoryService;
 import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.model.CourseInput;
 import mission.fastlmsmission.course.model.CourseParam;
@@ -21,6 +23,7 @@ import java.util.List;
 public class AdminCourseController extends BaseController {
 
     private final CourseService courseService;
+    private final CategoryService categoryService;
 
     @GetMapping("/course/list.do")
     public String list(Model model, CourseParam parameter) {
@@ -42,12 +45,15 @@ public class AdminCourseController extends BaseController {
         model.addAttribute("courses", courses);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pagerHtml);
+        System.out.println("courses=" + courses);
 
         return "admin/course/list";
     }
 
     @GetMapping(value = {"/course/add.do", "/course/edit.do"})
     public String add(Model model, HttpServletRequest request, CourseInput courseInput) {
+
+        List<CategoryDto> categories = categoryService.list();
 
         boolean editMode = request.getRequestURI().contains("/edit.do");
         CourseDto course = new CourseDto();
@@ -61,6 +67,7 @@ public class AdminCourseController extends BaseController {
         }
         model.addAttribute("course", course);
         model.addAttribute("editMode", editMode);
+        model.addAttribute("categories", categories);
         return "admin/course/add";
     }
 
@@ -80,6 +87,14 @@ public class AdminCourseController extends BaseController {
                 return "error/error";
             }
         }
+
+        return "redirect:/admin/course/list.do";
+    }
+
+    @PostMapping("/course/delete.do")
+    public String delete(Model model, HttpServletRequest request, CourseInput parameter) {
+        boolean result = courseService.del(parameter.getIdList());
+
 
         return "redirect:/admin/course/list.do";
     }

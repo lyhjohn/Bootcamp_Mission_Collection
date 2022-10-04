@@ -6,7 +6,6 @@ import mission.fastlmsmission.admin.model.MemberParam;
 import mission.fastlmsmission.admin.model.MemberInput;
 import mission.fastlmsmission.course.controller.BaseController;
 import mission.fastlmsmission.member.service.MemberService;
-import mission.fastlmsmission.util.PageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class AdminMemberController extends BaseController {
         }
 
         String queryString = parameter.getQueryString(); // 검색 후 페이지 이동해도 검색결과가 초기화되지 않도록 구현
-        String pagerHtml = super.getPagerHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(),
+        String pagerHtml = super.getPagerHtml(totalCount, parameter.getPageEnd(), parameter.getPageIndex(),
                 queryString);
 
         model.addAttribute("pager", pagerHtml);

@@ -13,13 +13,14 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Data
 public class Category {
 
     @Id
     @GeneratedValue
-    private Long id;
+    Long id;
 
-    private String categoryName;
-    private int sortValue; //순서
-    private boolean usingYn;
+    String categoryName;
+    int sortValue; //순서
+    boolean usingYn;
 }

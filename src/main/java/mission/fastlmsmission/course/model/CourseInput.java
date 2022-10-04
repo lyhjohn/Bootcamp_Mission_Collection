@@ -1,9 +1,31 @@
 package mission.fastlmsmission.course.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseInput {
-    Long id;
-    String subject;
+    private Long id;
+    private String imagePath;
+    private String keyword;
+    private String subject;
+
+    private String summary;
+
+    private String contents;
+    private Long price;
+    private Long salePrice;
+    private String saleEndDt;
+    private LocalDateTime regDt;
+    private LocalDateTime udtDt; // 업데이트 날짜
+
+    private Long categoryId;
+
+    private String idList;
+
 }

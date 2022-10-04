@@ -24,7 +24,29 @@
             font-size: 15px;
             height: 20px;
         }
+
+        .button a, .button button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 12px;
+            line-height: 20;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
     </style>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#submitForm').on('submit', function () {
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+            })
+        })
+    </script>
 </head>
 <body>
 <h1>강의 등록</h1>
@@ -32,17 +54,67 @@
 <br>
 
 <div class="detail">
-    <form method="post">
+    <form method="post" id="submitForm">
         <table>
             <tbody>
             <tr>
-                <th>강좌명:</th>
+                <th>강의 카테고리</th>
                 <td>
-                    <label for="editMode"></label>
-                    <input type="text" th:value="${course.subject}" name="subject" id="editMode" placeholder="강의명 입력"
+                    <select name="categoryId" id="categoryId" required>
+                        <option>카테고리 선택</option>
+                        <option th:selected="${course.categoryId == category.id}"
+                                th:each="category : ${categories}" th:text="${category.categoryName}"
+                                th:value="${category.id}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>강의명:</th>
+                <td>
+                    <input type="text" th:value="${course.subject}" name="subject" placeholder="강의명 입력"
                            required>
                 </td>
             </tr>
+            <tr>
+                <th>키워드:</th>
+                <td>
+                    <input type="text" th:value="${course.keyword}" name="keyword" placeholder="키워드 입력">
+                </td>
+            </tr>
+            <tr>
+                <th>요약:</th>
+                <td>
+                    <textarea th:text="${course.summary}" name="summary"
+                              placeholder="요약문구 입력"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>내용:</th>
+                <td>
+                    <textarea th:text="${course.contents}"  id="contents" name="contents"
+                           placeholder="내용 입력"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>정가:</th>
+                <td>
+                    <input type="text" th:value="${course.price}" name="price" placeholder="가격">
+                </td>
+            </tr>
+            <tr>
+                <th>할인가:</th>
+                <td>
+                    <input type="text" th:value="${course.salePrice}" name="salePrice" placeholder="할인가">
+                </td>
+            </tr>
+            <tr>
+                <th>할인 종료일:</th>
+                <td>
+                    <input type="text" th:value="${course.saleEndDt}" name="saleEndDt" placeholder="할인 종료일">
+                </td>
+            </tr>
+
+
             </tbody>
         </table>
         <div class="button">
@@ -52,6 +124,18 @@
         </div>
     </form>
 </div>
+
+<script type="text/javascript" src="/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var oEditors = [];
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "contents",
+        sSkinURI: "/se2/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+    });
+</script>
+
 
 </body>
 </html>

@@ -6,7 +6,6 @@ import mission.fastlmsmission.admin.mapper.MemberMapper;
 import mission.fastlmsmission.admin.model.MemberParam;
 import mission.fastlmsmission.components.MailComponents;
 import mission.fastlmsmission.member.entity.Member;
-import mission.fastlmsmission.member.entity.MemberCode;
 import mission.fastlmsmission.member.exception.MemberNotEmailAuthException;
 import mission.fastlmsmission.member.exception.MemberStopUserException;
 import mission.fastlmsmission.member.repository.MemberRepository;
@@ -191,7 +190,7 @@ public class MemberServiceImpl implements MemberService {
             int i = 0;
             for (MemberDto m: list) {
                 m.setTotalCount(totalCount);
-                m.setSeq(totalCount - parameter.getStartDataNum() - i);
+                m.setSeq(totalCount - parameter.getPageStart() - i);
                 i++;
             }
         }

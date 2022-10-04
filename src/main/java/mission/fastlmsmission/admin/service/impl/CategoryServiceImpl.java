@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.admin.dto.CategoryDto;
 import mission.fastlmsmission.admin.entity.Category;
 import mission.fastlmsmission.admin.exception.CategoryAlreadyExist;
+import mission.fastlmsmission.admin.mapper.CategoryMapper;
 import mission.fastlmsmission.admin.model.CategoryInput;
 import mission.fastlmsmission.admin.repository.CategoryRepository;
 import mission.fastlmsmission.admin.service.CategoryService;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     @Transactional
@@ -77,5 +79,11 @@ public class CategoryServiceImpl implements CategoryService {
 //                categoryDtoList.add(CategoryDto.of(e));
 //            });
 //        }
+    }
+
+    @Override
+    @Transactional
+    public List<CategoryDto> frontList(CategoryDto parameter) {
+        return categoryMapper.selectCategory(parameter);
     }
 }

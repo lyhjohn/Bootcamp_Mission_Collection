@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>강의 상세 페이지</title>
+
+    <style>
+        span.price {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<h1>강의 상세 정보</h1>
+<div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
+
+<form action="">
+<div>
+    <h2 th:text="|강의명: ${detail.subject}|"></h2>
+    <br>
+    <div>
+        <h2 th:utext="|상세내용: ${detail.contents}|"></h2>
+    </div>
+    <div>
+        <h3 th:text="|가격: ${detail.price}|"></h3>
+        <h3 th:text="|할인가격: ${detail.salePrice}|"></h3>
+    </div>
+    <div>
+        <button type="button" th:value="${detail.id}">수강신청하기</button>
+    </div>
+</div>
+</form>
+
+
+</body>
+</html>

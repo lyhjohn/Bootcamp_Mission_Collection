@@ -20,6 +20,8 @@ public class CategoryDto {
     int sortValue; //순서
     boolean usingYn;
 
+    int courseCount;
+
 
     public static CategoryDto of(Category category) {
         return CategoryDto.builder()

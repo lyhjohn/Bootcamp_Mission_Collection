@@ -1,11 +1,9 @@
 package mission.fastlmsmission.course.repository.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.dto.MemberDto;
 import mission.fastlmsmission.admin.mapper.CourseMapper;
 import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.entity.Course;
-import mission.fastlmsmission.course.exception.CourseException;
 import mission.fastlmsmission.course.model.CourseInput;
 import mission.fastlmsmission.course.model.CourseParam;
 import mission.fastlmsmission.course.repository.CourseRepository;
@@ -35,8 +33,18 @@ public class CourseServiceImpl implements CourseService {
 
         Course course = Course.builder()
                 .subject(parameter.getSubject())
+                .categoryId(parameter.getCategoryId())
                 .regDt(LocalDateTime.now())
+                .keyword(parameter.getKeyword())
+                .imagePath(parameter.getImagePath())
+                .summary(parameter.getSummary())
+                .price(parameter.getPrice())
+                .salePrice(parameter.getSalePrice())
+                .udtDt(parameter.getUdtDt())
+                .contents(parameter.getContents())
                 .build();
+
+        course.setSaleEndDt(parameter.getSaleEndDt());
         courseRepository.save(course);
         return true;
     }
@@ -47,15 +55,15 @@ public class CourseServiceImpl implements CourseService {
 
         long totalCount = courseMapper.selectListCount(parameter);
         List<CourseDto> list = courseMapper.selectList(parameter);
+
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for (CourseDto c: list) {
+            for (CourseDto c : list) {
                 c.setTotalCount(totalCount);
-                c.setSeq(totalCount - parameter.getStartDataNum() - i);
+                c.setSeq(totalCount - parameter.getPageStart() - i);
                 i++;
             }
         }
-
         return list;
     }
 
@@ -76,7 +84,61 @@ public class CourseServiceImpl implements CourseService {
         Course course = optionalCourse.get();
         course.setSubject(parameter.getSubject());
         course.setUdtDt(LocalDateTime.now());
+        course.setCategoryId(parameter.getCategoryId());
+        course.setContents(parameter.getContents());
+        course.setImagePath(parameter.getImagePath());
+        course.setPrice(parameter.getPrice());
+        course.setSaleEndDt(parameter.getSaleEndDt());
+        course.setSalePrice(parameter.getSalePrice());
+        course.setUdtDt(parameter.getUdtDt());
+        course.setRegDt(parameter.getRegDt());
+        course.setKeyword(parameter.getKeyword());
+        course.setSummary(parameter.getSummary());
 
         return true;
     }
+
+    @Override
+    @Transactional
+    public boolean del(String idList) {
+        if (idList != null && idList.length() > 0) {
+            String[] ids = idList.split(",");
+            long id = 0;
+            for (String s : ids) {
+                try {
+                    id = Long.parseLong(s);
+                } catch (Exception e) { // NumberFormatException 대비
+
+                }
+                if (id > 0) {
+                    courseRepository.deleteById(id);
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public List<CourseDto> frontList(CourseParam parameter) {
+        if (parameter.getCategoryId() < 1) {
+            List<Course> courseList = courseRepository.findAll();
+            System.out.println("courseList = " + courseList);
+            return CourseDto.of(courseList);
+        }
+
+        Optional<List<Course>> optionalCourses = courseRepository.findByCategoryId(parameter.getCategoryId());
+        if (optionalCourses.isPresent()) {
+            System.out.println("optionalCourses = " + optionalCourses);
+            return CourseDto.of(optionalCourses.get());
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public CourseDto frontDetail(long id) {
+        return courseRepository.findById(id).map(CourseDto::of).orElse(null);
+    }
 }
+
