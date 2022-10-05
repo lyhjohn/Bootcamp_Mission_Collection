@@ -6,7 +6,7 @@ import mission.fastlmsmission.admin.service.CategoryService;
 import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.model.CourseInput;
 import mission.fastlmsmission.course.model.CourseParam;
-import mission.fastlmsmission.course.repository.service.CourseService;
+import mission.fastlmsmission.course.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;

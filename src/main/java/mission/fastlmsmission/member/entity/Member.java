@@ -20,6 +20,7 @@ public class Member implements MemberCode{
     private String phone;
 
     private LocalDateTime regDt; // 가입 일자
+    private LocalDateTime udtDt; // 가입 일자
     private boolean emailAuthYn; // 이메일 인증 여부
     private String emailAuthKey; // 이메일 인증 키
 
@@ -33,6 +34,10 @@ public class Member implements MemberCode{
     private boolean adminYn;
     
     private String userStatus; //이용가능, 정지
+
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
 
 
 

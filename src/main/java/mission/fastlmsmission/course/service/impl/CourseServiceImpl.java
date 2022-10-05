@@ -1,20 +1,28 @@
-package mission.fastlmsmission.course.repository.service.impl;
+package mission.fastlmsmission.course.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.admin.mapper.CourseMapper;
 import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.entity.Course;
+import mission.fastlmsmission.course.entity.TakeCourse;
 import mission.fastlmsmission.course.model.CourseInput;
 import mission.fastlmsmission.course.model.CourseParam;
+import mission.fastlmsmission.course.model.ServiceResult;
+import mission.fastlmsmission.course.model.TakeCourseInput;
 import mission.fastlmsmission.course.repository.CourseRepository;
-import mission.fastlmsmission.course.repository.service.CourseService;
+import mission.fastlmsmission.course.repository.TakeCourseRepository;
+import mission.fastlmsmission.course.service.CourseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static mission.fastlmsmission.course.entity.TakeCourse.*;
+import static mission.fastlmsmission.course.entity.TakeCourseCode.STATUS_COMPLETE;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +30,7 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final TakeCourseRepository takeCourseRepository;
 
     @Override
     @Transactional
@@ -139,6 +148,48 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public CourseDto frontDetail(long id) {
         return courseRepository.findById(id).map(CourseDto::of).orElse(null);
+    }
+
+    @Override
+    public ServiceResult req(TakeCourseInput parameter) {
+        ServiceResult result = new ServiceResult();
+
+        Optional<Course> optionalCourse = courseRepository.findById(parameter.getCourseId());
+        if (optionalCourse.isEmpty()) {
+            result.setResult(false);
+            result.setMessage("강좌 정보가 존재하지 않습니다.");
+            return result;
+        }
+        Course course = optionalCourse.get();
+
+        String[] statusList = {STATUS_REQ, STATUS_COMPLETE};
+
+        // 동일한 유저아이디로 동일한 강좌를 신청했고 신청 상태가 REQ, COMPLETE일 경우 중복신청 방지
+        //CourseId와 UserId와 Status가 서로끼리 같은 경우의 횟수를 셈
+        long count = takeCourseRepository.countByCourseIdAndUserIdAndStatusIn(course.getId(), parameter.getUserId(),
+                Arrays.asList(statusList));
+
+        if (count > 0) {
+            result.setResult(false);
+            result.setMessage("이미 신청한 강좌 정보가 존재합니다.");
+            return result;
+        }
+
+
+        TakeCourse takeCourse = builder()
+                .courseId(course.getId())
+                .userId(parameter.getUserId())
+                .payPrice(course.getSalePrice())
+                .regDt(LocalDateTime.now())
+                .status(STATUS_REQ)
+                .build();
+
+        takeCourseRepository.save(takeCourse);
+
+        result.setResult(true);
+        result.setMessage("");
+
+        return result;
     }
 }
 

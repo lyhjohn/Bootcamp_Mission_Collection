@@ -4,6 +4,7 @@ import lombok.*;
 import mission.fastlmsmission.member.entity.Member;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
@@ -15,6 +16,7 @@ public class MemberDto {
     String password;
     String phone;
     LocalDateTime regDt;
+    LocalDateTime udt;
     boolean emailAuthYn;
     String emailAuthKey;
     LocalDateTime emailAuthDt;
@@ -26,7 +28,19 @@ public class MemberDto {
     long seq;
 
     String userStatus;
+    String zipcode;
+    String addr;
+    String addrDetail;
 
+    public String getRegDtText() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
+        return regDt != null ? regDt.format(formatter) : "";
+    }
+
+    public String getUdtText() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
+        return udt != null ? udt.format(formatter) : "";
+    }
 
 
     public static MemberDto of(Member member) {
@@ -42,9 +56,10 @@ public class MemberDto {
                 .emailAuthYn(member.isEmailAuthYn())
                 .adminYn(member.isAdminYn())
                 .userStatus(member.getUserStatus())
+                .udt(member.getUdtDt())
+                .zipcode(member.getZipcode())
+                .addr(member.getAddr())
+                .addrDetail(member.getAddrDetail())
                 .build();
     }
-
-
-
 }

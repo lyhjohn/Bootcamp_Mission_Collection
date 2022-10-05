@@ -5,6 +5,7 @@ import mission.fastlmsmission.admin.dto.MemberDto;
 import mission.fastlmsmission.admin.mapper.MemberMapper;
 import mission.fastlmsmission.admin.model.MemberParam;
 import mission.fastlmsmission.components.MailComponents;
+import mission.fastlmsmission.course.model.ServiceResult;
 import mission.fastlmsmission.member.entity.Member;
 import mission.fastlmsmission.member.exception.MemberNotEmailAuthException;
 import mission.fastlmsmission.member.exception.MemberStopUserException;
@@ -217,6 +218,8 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = optionalMember.get();
         member.setUserStatus(userStatus);
+        member.setUdtDt(LocalDateTime.now());
+
 
         return MemberDto.of(member);
     }
@@ -230,10 +233,53 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = optionalMember.get();
 
+        //비밀번호 변경
         String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         member.setPassword(encPassword);
+        member.setUdtDt(LocalDateTime.now());
+
 
         return MemberDto.of(member);
+    }
+
+    @Override
+    @Transactional
+    public ServiceResult updateMemberPassword(MemberInput parameter) {
+
+        Optional<Member> optionalMember = memberRepository.findById(parameter.getEmail());
+        if (optionalMember.isEmpty()) {
+            return new ServiceResult(false, "회원 정보가 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        // 현재 비밀번호와 새로운 비밀번호 일치 여부 확인
+        if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
+            return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
+        }
+
+        //비밀번호 변경
+        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+        member.setPassword(encPassword);
+        member.setUdtDt(LocalDateTime.now());
+
+        return new ServiceResult(true);
+    }
+
+    @Override
+    @Transactional
+    public ServiceResult updateMember(MemberInput parameter) {
+        Optional<Member> optionalMember = memberRepository.findById(parameter.getEmail());
+        if (optionalMember.isEmpty()) {
+            return new ServiceResult(false, "회원 정보가 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+        member.setPhone(parameter.getPhone());
+        member.setUdtDt(LocalDateTime.now());
+        member.setZipcode(parameter.getZipcode());
+        member.setAddr(parameter.getAddr());
+        member.setAddrDetail(parameter.getAddrDetail());
+
+        return new ServiceResult();
     }
 }
