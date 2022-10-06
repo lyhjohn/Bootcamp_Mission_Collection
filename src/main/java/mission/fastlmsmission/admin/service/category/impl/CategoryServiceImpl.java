@@ -1,13 +1,13 @@
-package mission.fastlmsmission.admin.service.impl;
+package mission.fastlmsmission.admin.service.category.impl;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.dto.CategoryDto;
+import mission.fastlmsmission.admin.dto.category.CategoryDto;
 import mission.fastlmsmission.admin.entity.Category;
 import mission.fastlmsmission.admin.exception.CategoryAlreadyExist;
 import mission.fastlmsmission.admin.mapper.CategoryMapper;
-import mission.fastlmsmission.admin.model.CategoryInput;
-import mission.fastlmsmission.admin.repository.CategoryRepository;
-import mission.fastlmsmission.admin.service.CategoryService;
+import mission.fastlmsmission.admin.model.category.CategoryInput;
+import mission.fastlmsmission.admin.repository.category.CategoryRepository;
+import mission.fastlmsmission.admin.service.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

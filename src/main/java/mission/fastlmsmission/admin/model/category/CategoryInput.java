@@ -1,4 +1,4 @@
-package mission.fastlmsmission.admin.model;
+package mission.fastlmsmission.admin.model.category;
 
 import lombok.Data;
 

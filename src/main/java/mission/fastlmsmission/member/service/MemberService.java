@@ -1,7 +1,7 @@
 package mission.fastlmsmission.member.service;
 
-import mission.fastlmsmission.admin.dto.MemberDto;
-import mission.fastlmsmission.admin.model.MemberParam;
+import mission.fastlmsmission.admin.dto.member.MemberDto;
+import mission.fastlmsmission.admin.model.member.MemberParam;
 import mission.fastlmsmission.course.model.ServiceResult;
 import mission.fastlmsmission.model.MemberInput;
 import mission.fastlmsmission.model.ResetPasswordInput;
@@ -52,4 +52,8 @@ public interface MemberService extends UserDetailsService {
 
     // 회원정보 수정
     ServiceResult updateMember(MemberInput parameter);
+
+    //회원 탈퇴
+    ServiceResult withdraw(String userId, String password);
+
 }

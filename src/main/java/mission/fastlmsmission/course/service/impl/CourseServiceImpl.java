@@ -51,6 +51,8 @@ public class CourseServiceImpl implements CourseService {
                 .salePrice(parameter.getSalePrice())
                 .udtDt(parameter.getUdtDt())
                 .contents(parameter.getContents())
+                .fileName(parameter.getSaveFileName())
+                .urlFileName(parameter.getUrlFileName())
                 .build();
 
         course.setSaleEndDt(parameter.getSaleEndDt());
@@ -103,6 +105,8 @@ public class CourseServiceImpl implements CourseService {
         course.setRegDt(parameter.getRegDt());
         course.setKeyword(parameter.getKeyword());
         course.setSummary(parameter.getSummary());
+        course.setFileName(parameter.getSaveFileName());
+        course.setUrlFileName(parameter.getUrlFileName());
 
         return true;
     }
@@ -151,6 +155,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public ServiceResult req(TakeCourseInput parameter) {
         ServiceResult result = new ServiceResult();
 
@@ -190,6 +195,13 @@ public class CourseServiceImpl implements CourseService {
         result.setMessage("");
 
         return result;
+    }
+
+    @Override
+    @Transactional
+    public List<CourseDto> listAll() {
+        List<Course> courseList = courseRepository.findAll();
+        return CourseDto.of(courseList);
     }
 }
 

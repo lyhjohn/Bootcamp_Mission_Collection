@@ -1,8 +1,7 @@
-package mission.fastlmsmission.admin.service;
+package mission.fastlmsmission.admin.service.category;
 
-import mission.fastlmsmission.admin.dto.CategoryDto;
-import mission.fastlmsmission.admin.model.CategoryInput;
-import org.springframework.stereotype.Service;
+import mission.fastlmsmission.admin.dto.category.CategoryDto;
+import mission.fastlmsmission.admin.model.category.CategoryInput;
 
 import java.util.List;
 

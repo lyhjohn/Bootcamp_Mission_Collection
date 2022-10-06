@@ -38,7 +38,7 @@
         <include refid="selectListWhere"/>
     </select>
 
-    <select id="selectList" resultType="mission.fastlmsmission.admin.dto.MemberDto">
+    <select id="selectList" resultType="mission.fastlmsmission.admin.dto.member.MemberDto">
         select *
         from member
         where 1 = 1

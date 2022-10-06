@@ -8,6 +8,7 @@ import mission.fastlmsmission.course.model.TakeCourseInput;
 import mission.fastlmsmission.course.service.TakeCourseService;
 import mission.fastlmsmission.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,6 @@ public class ApiMemberController {
         }
 
         return ResponseEntity.ok().body(true);
-
     }
+
 }

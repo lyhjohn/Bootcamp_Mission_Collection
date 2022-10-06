@@ -37,7 +37,10 @@ public class Course {
     private LocalDateTime regDt;
     private LocalDateTime udtDt; // 업데이트 날짜
 
-    Long categoryId;
+    private Long categoryId;
+
+    private String fileName;
+    private String urlFileName;
 
     public void setSaleEndDt(String value) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

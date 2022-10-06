@@ -1,8 +1,6 @@
 package mission.fastlmsmission.course.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -25,5 +23,9 @@ public class CourseInput {
     private Long categoryId;
 
     private String idList;
+
+    private String saveFileName;
+    private String urlFileName;
+
 
 }

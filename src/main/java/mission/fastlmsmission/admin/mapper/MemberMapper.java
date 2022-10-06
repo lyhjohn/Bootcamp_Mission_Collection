@@ -1,7 +1,7 @@
 package mission.fastlmsmission.admin.mapper;
 
-import mission.fastlmsmission.admin.dto.MemberDto;
-import mission.fastlmsmission.admin.model.MemberParam;
+import mission.fastlmsmission.admin.dto.member.MemberDto;
+import mission.fastlmsmission.admin.model.member.MemberParam;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

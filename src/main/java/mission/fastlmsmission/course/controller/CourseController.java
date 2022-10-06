@@ -1,8 +1,8 @@
 package mission.fastlmsmission.course.controller;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.dto.CategoryDto;
-import mission.fastlmsmission.admin.service.CategoryService;
+import mission.fastlmsmission.admin.dto.category.CategoryDto;
+import mission.fastlmsmission.admin.service.category.CategoryService;
 import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.model.CourseParam;
 import mission.fastlmsmission.course.service.CourseService;

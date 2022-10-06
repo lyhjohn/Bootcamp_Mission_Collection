@@ -73,6 +73,9 @@
         <h3 th:text="|할인가격: ${detail.salePrice}|"></h3>
     </div>
     <div>
+        <img th:src="${detail.urlFileName}" alt="">
+    </div>
+    <div>
         <form id="submitForm" method="post">
             <input type="hidden" name="id" th:value="${detail.id}">
             <button type="submit">수강신청하기</button>

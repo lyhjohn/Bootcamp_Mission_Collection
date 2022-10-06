@@ -1,7 +1,7 @@
 package mission.fastlmsmission.course.controller;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.service.CategoryService;
+import mission.fastlmsmission.admin.service.category.CategoryService;
 import mission.fastlmsmission.common.model.ResponseResult;
 import mission.fastlmsmission.course.model.ServiceResult;
 import mission.fastlmsmission.course.model.TakeCourseInput;

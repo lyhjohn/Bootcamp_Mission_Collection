@@ -2,7 +2,7 @@ package mission.fastlmsmission.member.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import mission.fastlmsmission.admin.dto.MemberDto;
+import mission.fastlmsmission.admin.dto.member.MemberDto;
 import mission.fastlmsmission.course.dto.TakeCourseDto;
 import mission.fastlmsmission.course.model.ServiceResult;
 import mission.fastlmsmission.course.service.TakeCourseService;
@@ -32,6 +32,7 @@ public class MemberController {
 
         return "/member/login";
     }
+
 
     @GetMapping("/register") // 보여지는 url
     public String register(Model model) {
@@ -74,7 +75,7 @@ public class MemberController {
         ServiceResult result = memberService.updateMember(parameter);
         if (!result.isResult()) {
             model.addAttribute("message", result.getMessage());
-            return "error/error";
+            return "error/member_error";
         }
 
         return "redirect:/member/info";
@@ -96,7 +97,7 @@ public class MemberController {
         ServiceResult result = memberService.updateMemberPassword(parameter);
         if (!result.isResult()) {
             model.addAttribute("message", result.getMessage());
-            return "error/error";
+            return "error/member_error";
         }
         return "redirect:/member/info";
     }
@@ -154,5 +155,23 @@ public class MemberController {
         }
         model.addAttribute("result", result);
         return "member/reset_password_result";
+    }
+
+    @GetMapping("/withdraw")
+    public String withdraw(ResetPasswordInput parameter, Model model) {
+        return "member/withdraw";
+    }
+
+    @PostMapping("/withdraw")
+    public String withdrawSubmit(Principal principal, Model model, MemberInput parameter) {
+        String userId = principal.getName();
+
+        ServiceResult result = memberService.withdraw(userId, parameter.getPassword());
+
+        if (!result.isResult()) {
+            model.addAttribute("message", result.getMessage());
+            return "error/member_error";
+        }
+        return "redirect:/member/logout";
     }
 }

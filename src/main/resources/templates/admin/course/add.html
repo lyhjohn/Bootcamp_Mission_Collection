@@ -54,7 +54,7 @@
 <br>
 
 <div class="detail">
-    <form method="post" id="submitForm">
+    <form method="post" id="submitForm" enctype="multipart/form-data"> <!-- 서버로 파일 전송을 위해서 enctype 지정 -->
         <table>
             <tbody>
             <tr>
@@ -111,6 +111,12 @@
                 <th>할인 종료일:</th>
                 <td>
                     <input type="text" th:value="${course.saleEndDt}" name="saleEndDt" placeholder="할인 종료일">
+                </td>
+            </tr>
+            <tr>
+                <th>첨부 파일</th>
+                <td>
+                    <input type="file" name="file">
                 </td>
             </tr>
 

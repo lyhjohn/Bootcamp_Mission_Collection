@@ -1,4 +1,4 @@
-package mission.fastlmsmission.admin.repository;
+package mission.fastlmsmission.admin.repository.category;
 
 import mission.fastlmsmission.admin.entity.Category;
 import mission.fastlmsmission.course.entity.Course;

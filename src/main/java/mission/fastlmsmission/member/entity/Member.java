@@ -1,9 +1,12 @@
 package mission.fastlmsmission.member.entity;
 
 import lombok.*;
+import mission.fastlmsmission.member.history.entity.History;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -39,7 +42,15 @@ public class Member implements MemberCode{
     private String addr;
     private String addrDetail;
 
+    @OneToMany(mappedBy = "member")
+    private List<History> historyList = new ArrayList<>();
 
+
+
+    public void setHistoryList(History history) {
+        historyList.add(history);
+        history.setMember(this);
+    }
 
 
     @Override

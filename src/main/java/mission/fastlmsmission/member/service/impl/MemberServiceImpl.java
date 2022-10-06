@@ -1,9 +1,9 @@
 package mission.fastlmsmission.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.dto.MemberDto;
+import mission.fastlmsmission.admin.dto.member.MemberDto;
 import mission.fastlmsmission.admin.mapper.MemberMapper;
-import mission.fastlmsmission.admin.model.MemberParam;
+import mission.fastlmsmission.admin.model.member.MemberParam;
 import mission.fastlmsmission.components.MailComponents;
 import mission.fastlmsmission.course.model.ServiceResult;
 import mission.fastlmsmission.member.entity.Member;
@@ -13,6 +13,7 @@ import mission.fastlmsmission.member.repository.MemberRepository;
 import mission.fastlmsmission.member.service.MemberService;
 import mission.fastlmsmission.model.MemberInput;
 import mission.fastlmsmission.model.ResetPasswordInput;
+import mission.fastlmsmission.util.PasswordUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -109,6 +110,10 @@ public class MemberServiceImpl implements MemberService {
 
         if (member.getUserStatus().equals(MEMBER_STATUS_STOP)) {
             throw new MemberStopUserException("정지된 회원 입니다.");
+        }
+
+        if (member.getUserStatus().equals(MEMBER_STATUS_WITHDRAW)) {
+            throw new MemberStopUserException("탈퇴된 회원 입니다.");
         }
 
 
@@ -253,15 +258,19 @@ public class MemberServiceImpl implements MemberService {
         }
         Member member = optionalMember.get();
 
-        // 현재 비밀번호와 새로운 비밀번호 일치 여부 확인
+        // 현재 비밀번호와 입력된 비밀번호 일치하는지 검증
+        if (!PasswordUtils.equals(parameter.getPassword(), member.getPassword())) {
+            return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
+        }
+
+        // 현재 비밀번호와 입력된 비밀번호 일치 여부 확인
         if (!BCrypt.checkpw(parameter.getPassword(), member.getPassword())) {
             return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
         }
 
-        //비밀번호 변경
-        String encPassword = BCrypt.hashpw(parameter.getNewPassword(), BCrypt.gensalt());
+        // 새로운 비밀번호로 세팅
+        String encPassword = PasswordUtils.encryptPassword(parameter.getNewPassword());
         member.setPassword(encPassword);
-        member.setUdtDt(LocalDateTime.now());
 
         return new ServiceResult(true);
     }
@@ -279,6 +288,39 @@ public class MemberServiceImpl implements MemberService {
         member.setZipcode(parameter.getZipcode());
         member.setAddr(parameter.getAddr());
         member.setAddrDetail(parameter.getAddrDetail());
+
+        return new ServiceResult();
+    }
+
+    @Override
+    @Transactional
+    public ServiceResult withdraw(String userId, String password) {
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (optionalMember.isEmpty()) {
+            return new ServiceResult(false, "일치하는 회원 정보가 없습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        // 저장된 비밀번호과 입력된 비밀번호 일치 여부 확인
+        if (!PasswordUtils.equals(password, member.getPassword())) {
+
+            return new ServiceResult(false, "비밀번호가 일치하지 않습니다.");
+        }
+        member.setUserName("탈퇴 회원");
+        member.setPassword("");
+        member.setPassword("");
+        member.setUdtDt(null);
+        member.setRegDt(null);
+        member.setEmailAuthDt(null);
+        member.setEmailAuthYn(false);
+        member.setZipcode("");
+        member.setEmailAuthKey("");
+        member.setResetPasswordKey("");
+        member.setResetPasswordLimitDt(null);
+        member.setAddr("");
+        member.setAddrDetail("");
+        member.setUserStatus(MEMBER_STATUS_WITHDRAW);
 
         return new ServiceResult();
     }

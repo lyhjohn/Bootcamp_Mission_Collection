@@ -1,10 +1,10 @@
-package mission.fastlmsmission.admin.controller;
+package mission.fastlmsmission.admin.controller.category;
 
 import lombok.RequiredArgsConstructor;
-import mission.fastlmsmission.admin.dto.CategoryDto;
-import mission.fastlmsmission.admin.model.CategoryInput;
-import mission.fastlmsmission.admin.model.MemberParam;
-import mission.fastlmsmission.admin.service.CategoryService;
+import mission.fastlmsmission.admin.dto.category.CategoryDto;
+import mission.fastlmsmission.admin.model.category.CategoryInput;
+import mission.fastlmsmission.admin.model.member.MemberParam;
+import mission.fastlmsmission.admin.service.category.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

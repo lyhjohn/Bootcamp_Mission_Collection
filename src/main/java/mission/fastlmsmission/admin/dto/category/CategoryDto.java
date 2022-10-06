@@ -1,11 +1,8 @@
-package mission.fastlmsmission.admin.dto;
+package mission.fastlmsmission.admin.dto.category;
 
 import lombok.*;
 import mission.fastlmsmission.admin.entity.Category;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
