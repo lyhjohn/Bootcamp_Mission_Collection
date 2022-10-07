@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -32,24 +33,12 @@ public class AdminBannerController {
         return "/admin/banner/list";
     }
 
-    @GetMapping("/banner/add.do")
-    public String addBanner(Model model) {
+//    @GetMapping("/banner/add.do")
+//    public String addBanner(Model model) {
+//
+//        return "/admin/banner/add";
+//    }
 
-        return "/admin/banner/add";
-    }
-
-    @PostMapping("/banner/add.do")
-    public String addBanner(BannerInput parameter, MultipartFile file, Model model) {
-
-        ServiceResult result = bannerService.add(parameter, file);
-
-        if (!result.isResult()) {
-            model.addAttribute("error", result.getMessage());
-            return "error/admin_error";
-        }
-
-        return "redirect:/admin/banner/list.do";
-    }
 
     @PostMapping("/banner/delete.do")
     public String deleteBanner(BannerParam parameter, Model model) {
@@ -64,28 +53,44 @@ public class AdminBannerController {
         return "redirect:/admin/banner/list.do";
     }
 
-    @GetMapping("/banner/detail.do")
-    public String detailBanner(BannerInput parameter, Model model) {
-        BannerDto banner = bannerService.findOne(parameter);
-        if (banner == null) {
-            throw new CourseException("선택한 배너 정보가 없습니다.");
+    @GetMapping(value = {"/banner/detail.do", "/banner/add.do"})
+    public String detailBanner(BannerInput parameter, Model model, HttpServletRequest request) {
+
+        boolean editMode = request.getRequestURI().contains("/detail.do");
+
+        if (editMode) {
+            BannerDto banner = bannerService.findOne(parameter);
+            if (banner == null) {
+                throw new CourseException("선택한 배너 정보가 없습니다.");
+            }
+            model.addAttribute("banner", banner);
         }
 
-        model.addAttribute("banner", banner);
+        model.addAttribute("editMode", editMode);
 
         return "/admin/banner/detail";
     }
 
-    @PostMapping("/banner/update.do")
-    public String updateBanner(BannerInput parameter, MultipartFile file, Model model) {
+    @PostMapping(value = {"/banner/detail.do", "/banner/add.do"})
+    public String updateBanner(BannerInput parameter, MultipartFile file, Model model, HttpServletRequest request) {
 
-        ServiceResult result = bannerService.update(parameter, file);
+        boolean editMode = request.getRequestURI().contains("/detail.do");
 
-        if (!result.isResult()) {
-            model.addAttribute("error", result.getMessage());
-            return "error/admin_error";
+        if (editMode) {
+            ServiceResult result = bannerService.update(parameter, file);
+            if (!result.isResult()) {
+                model.addAttribute("error", result.getMessage());
+                return "error/admin_error";
+            }
         }
 
+        if (!editMode) {
+            ServiceResult result = bannerService.add(parameter, file);
+            if (!result.isResult()) {
+                model.addAttribute("error", result.getMessage());
+                return "error/admin_error";
+            }
+        }
         return "redirect:/admin/banner/list.do";
     }
 }

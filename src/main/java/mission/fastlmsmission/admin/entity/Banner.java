@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 @Entity
 @Getter
@@ -34,7 +33,7 @@ public class Banner {
     private long seq;
 
 
-    private String openPos;
+    private String open;
 
 
     public static Banner createBanner(BannerInput param, String[] fileNames) {
@@ -45,7 +44,7 @@ public class Banner {
                 .urlFilename(fileNames[1])
                 .name(param.getName())
                 .regDt(param.getRegDt())
-                .openPos(param.getOpenPos())
+                .open(param.getOpen())
                 .openPublicYn(param.isOpenPublicYn())
                 .seq(param.getSeq())
                 .regDt(LocalDateTime.now())
@@ -60,14 +59,14 @@ public class Banner {
             this.localFilename = fileNames[0];
             this.urlFilename = fileNames[1];
             this.regDt = parameter.getRegDt();
-            this.openPos = parameter.getOpenPos();
+            this.open = parameter.getOpen();
             this.openPublicYn = parameter.isOpenPublicYn();
             this.seq = parameter.getSeq();
             this.url = parameter.getUrl();
         } else {
             this.name = parameter.getName();
             this.regDt = parameter.getRegDt();
-            this.openPos = parameter.getOpenPos();
+            this.open = parameter.getOpen();
             this.openPublicYn = parameter.isOpenPublicYn();
             this.seq = parameter.getSeq();
             this.url = parameter.getUrl();

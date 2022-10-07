@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import mission.fastlmsmission.admin.entity.Banner;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +32,7 @@ public class BannerDto {
     private boolean openPublicYn;
     private long seq;
 
-    private String openPos;
+    private String open;
 
 
     public static BannerDto of(Banner banner) {
@@ -44,7 +43,7 @@ public class BannerDto {
                 .name(banner.getName())
                 .regDt(banner.getRegDt())
                 .url(banner.getUrl())
-                .openPos(banner.getOpenPos())
+                .open(banner.getOpen())
                 .openPublicYn(banner.isOpenPublicYn())
                 .seq(banner.getSeq())
                 .build();

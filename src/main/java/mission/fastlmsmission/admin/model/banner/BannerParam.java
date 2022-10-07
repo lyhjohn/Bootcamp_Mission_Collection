@@ -23,5 +23,5 @@ public class BannerParam {
     private boolean openPublicYn;
     private long seq;
 
-    private String openWay;
+    private String open;
 }

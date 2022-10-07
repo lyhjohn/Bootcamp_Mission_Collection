@@ -21,5 +21,5 @@ public class BannerInput {
     private boolean openPublicYn;
     private long seq;
 
-    private String openPos;
+    private String open;
 }

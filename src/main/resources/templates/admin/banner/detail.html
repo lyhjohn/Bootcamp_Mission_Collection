@@ -31,7 +31,7 @@
 <br>
 
 <div>
-    <form method="post" enctype="multipart/form-data" action="/admin/banner/update.do">
+    <form method="post" enctype="multipart/form-data">
         <table>
             <tbody>
             <tr>
@@ -39,7 +39,8 @@
                     <p th:text="#{bannerName}">배너명</p>
                 </th>
                 <td>
-                    <input type="text" name="name" th:value="${banner.name}">
+                    <input type="text" name="name" th:value="${banner?.name}" th:if="${editMode}">
+                    <input type="text" name="name" th:value="${banner?.name}" th:if="${!editMode}" required>
                 </td>
             </tr>
             <tr>
@@ -47,7 +48,8 @@
                     <p th:text="#{bannerFile}">배너 파일</p>
                 </th>
                 <td>
-                    <input type="file" name="file" th:value="${banner.localFilename}">
+                    <input type="file" name="file" th:value="${banner?.localFilename}" th:if="${editMode}">
+                    <input type="file" name="file" th:value="${banner?.localFilename}" th:if="${!editMode}" required>
                 </td>
             </tr>
             <tr>
@@ -55,17 +57,18 @@
                     <p th:text="#{bannerUrl}">링크 주소</p>
                 </th>
                 <td>
-                    <input type="text" name="url" th:value="${banner.url}">
+                    <input type="text" name="url" th:value="${banner?.url}">
                 </td>
             </tr>
             <tr>
                 <th>
-                    <p th:text="#{bannerOpenPos}">오픈 위치</p>
+                    <p th:text="#{bannerOpen}">오픈 방법</p>
                 </th>
                 <td>
-                    <select name="openPos" th:value="${banner.openPos}">
-                        <option value="" th:selected="|${banner.openPos} = ''|">오픈 위치 선택</option>
-                        <option value="main" th:selected="|${banner.openPos} = 'main'|">메인 페이지</option>
+                    <select name="open" th:value="${banner?.open}" required>
+                        <option value="" th:selected="|${banner?.open} = ''|">오픈 방법 선택</option>
+                        <option value="new" th:selected="|${banner?.getOpen} = 'new'|">새 창</option>
+                        <option value="notNew" th:selected="|${banner?.getOpen} = 'notNew'|">기존 창</option>
                     </select>
                 </td>
             </tr>
@@ -74,7 +77,8 @@
                     <p th:text="#{bannerOrder}">정렬 순서</p>
                 </th>
                 <td>
-                    <input type="text" name="seq" th:value="${banner.seq}">
+                    <input type="text" name="seq" th:value="${banner?.seq}" th:if="${editMode}">
+                    <input type="text" name="seq" th:value="${banner?.seq}" th:if="${!editMode}" required>
                 </td>
             </tr>
             <tr>
@@ -83,13 +87,16 @@
                 </th>
                 <td>
                     <input type="checkbox" name="openPublicYn"
-                           th:checked="${banner.isOpenPublicYn()}">공개
+                           th:checked="${banner?.isOpenPublicYn()}" th:if="${editMode}">
+                    <input type="checkbox" name="openPublicYn"
+                           th:checked="${banner?.isOpenPublicYn()}" th:if="${!editMode}" required>공개
                 </td>
             </tr>
             </tbody>
         </table>
-        <input type="hidden" name=id th:value="${banner.id}">
-        <button type="submit" it="submitButton">배너 수정 하기</button>
+        <input type="hidden" name=id th:value="${banner?.id}">
+        <button th:if="${editMode}" type="submit">배너 수정 하기</button>
+        <button th:if="${!editMode}" type="submit">배너 등록 하기</button>
         <a href="/admin/banner/list.do">목록 이동</a>
     </form>
 </div>

@@ -51,11 +51,6 @@ public class BannerServiceImpl implements BannerService {
             return new ServiceResult(false, "동일한 이름의 배너가 존재합니다.");
         }
 
-        Optional<Banner> findByUrl = bannerRepository.findByUrl(parameter.getUrl());
-        if (findByUrl.isPresent()) {
-            return new ServiceResult(false, "동일한 주소의 배너가 존재합니다.");
-        }
-
         if (fileNames == null) {
             return new ServiceResult(false, "파일이 존재하지 않습니다.");
         }
