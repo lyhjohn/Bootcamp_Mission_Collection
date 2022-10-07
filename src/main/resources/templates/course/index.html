@@ -15,7 +15,7 @@
 <div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
 
 <div>
-    <!-- ? : 파라미터가 없다면 현재페이지로 새로고침 -->
+    <!-- ? : 파라미터가 없을때 사용하면 현재페이지로 새로고침 (전체보기 누르거나 강의목록 누를 때)-->
     <a href="?">전체</a>
     (<span th:text="${courseCount}"></span>)
     <th:block th:each="y : ${categoryList}">

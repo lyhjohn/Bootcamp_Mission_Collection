@@ -1,8 +1,6 @@
 package mission.fastlmsmission.admin.mapper;
 
-import mission.fastlmsmission.course.dto.CourseDto;
 import mission.fastlmsmission.course.dto.TakeCourseDto;
-import mission.fastlmsmission.course.model.CourseParam;
 import mission.fastlmsmission.course.model.TakeCourseParam;
 import org.apache.ibatis.annotations.Mapper;
 

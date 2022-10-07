@@ -27,7 +27,7 @@ public class MemberController {
     private final MemberService memberService;
     private final TakeCourseService takeCourseService;
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login() {
 
         return "/member/login";

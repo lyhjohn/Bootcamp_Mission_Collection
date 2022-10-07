@@ -1,11 +1,10 @@
-package mission.fastlmsmission.member.history.entity;
+package mission.fastlmsmission.history.entity;
 
 import lombok.*;
 import mission.fastlmsmission.member.entity.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

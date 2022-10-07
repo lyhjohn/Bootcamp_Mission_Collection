@@ -1,32 +1,27 @@
 package mission.fastlmsmission.main.controller;
 
 import lombok.RequiredArgsConstructor;
+import mission.fastlmsmission.admin.dto.banner.BannerDto;
+import mission.fastlmsmission.admin.service.banner.BannerService;
 import mission.fastlmsmission.components.MailComponents;
-import mission.fastlmsmission.member.history.entity.History;
-import mission.fastlmsmission.member.history.service.HistoryService;
-import org.apache.tomcat.util.http.RequestUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.Principal;
-
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MainController {
 
     private final MailComponents mailComponents;
+    private final BannerService bannerService;
 
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List<BannerDto> bannerList = bannerService.bannerList();
+
+        model.addAttribute("bannerList", bannerList);
 
         return "index";
     }

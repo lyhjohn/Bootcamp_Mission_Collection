@@ -1,7 +1,7 @@
 package mission.fastlmsmission.member.entity;
 
 import lombok.*;
-import mission.fastlmsmission.member.history.entity.History;
+import mission.fastlmsmission.history.entity.History;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

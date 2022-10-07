@@ -67,13 +67,15 @@
         <tr>
             <th>이메일 인증</th>
             <td>
-                <p th:text="${member.emailAuthYn}"></p>
+                <p th:if="${member.emailAuthYn}">인증 완료</p>
+                <p th:if="${!member.emailAuthYn}">인증 미완료</p>
             </td>
         </tr>
         <tr>
             <th>관리자 여부</th>
             <td>
-                <p th:text="${member.adminYn}"></p>
+                <p th:if="${member.adminYn}">Yes</p>
+                <p th:if="${!member.adminYn}">No</p>
             </td>
         </tr>
         <tr>
@@ -117,25 +119,25 @@
     <table>
         <thead>
         <tr>
-            <th>NO (최근 5회)</th>
+            <th>NO (최근 5건)</th>
             <th>로그인 일자</th>
             <th>접속 IP</th>
             <th>접속 UserAgent</th>
         </tr>
         </thead>
-        <tbody th:each="history, i : *{historyList}" th:if="${i.index < 6}">
+        <tbody th:each="history, i : *{historyList}" th:if="${i.index < 5}">
         <tr>
             <td>
-                <p th:text="${i.index + 1}" id="number"></p>
+                <p th:text="|${member.historyList.size() - i.index}|" id="number"></p>
             </td>
             <td>
-                <p th:text="${history.loginDt}"></p>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].getLoginDt()}|"></p>
             </td>
             <td>
-                <p th:text="${history.ip}"></p>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].ip}|"></p>
             </td>
             <td>
-                <p th:text="${history.userAgent}"></p>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].userAgent}|"></p>
             </td>
         </tr>
         </tbody>

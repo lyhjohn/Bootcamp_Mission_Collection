@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 배너 관리</title>
+    <style>
+        .list table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid #444444;
+        }
+
+        #deleteButton {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 16px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+
+
+        .total-count {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 20%;
+            float: left;
+        }
+
+        .pager {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .pager a.on {
+            font-weight: bold;
+            color: red;
+        }
+
+        .centerText {
+            text-align: center;
+        }
+
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#selectAll').on('click', function () {
+                    var checked = $(this).is(':checked');
+                    $('#dataList input[type=checkbox]').each(function (k, v) {
+                        $(this).prop('checked', checked);
+                    });
+                }
+            );
+
+            $('#deleteButton').on('click', function () {
+                var $checked = $('#dataList input[type=checkbox]:checked')
+                if ($checked.length < 1) {
+                    alert('삭제할 배너를 선택해 주세요');
+                    return false;
+                }
+
+                if (!confirm('선택한 배너를 정말 삭제하시겠습니까?')) {
+                    return false;
+                }
+
+                var idList = [];
+
+                $.each($checked, function (k, v) {
+                    console.log($(this).val());
+                    idList.push($(this).val()); // 체크된걸 idList에 담음
+                });
+                console.log(idList); // 배열
+                console.log(idList.join(',')) // 배열을 문자로 출력
+
+                var $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val(idList.join(',')); // 배열 사이사이에 컴마를 넣어 String으로 만듬
+                $deleteForm.submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<h1>배너 관리</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<a href="/admin/banner/add.do">배너 등록</a>
+<button type="button" id="deleteButton">선택 삭제</button>
+
+
+<div class="list">
+    <table>
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="selectAll">
+            </th>
+            <th>
+                <p th:text="#{bannerSeq}">NO</p>
+            </th>
+            <th>
+                <p th:text="#{bannerName}">배너명</p>
+            </th>
+            <th>
+                <p th:text="#{bannerImage}">이미지</p>
+            </th>
+            <th>
+                <p th:text="#{bannerRegDt}">등록일</p>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="banner : ${bannerList}" class="centerText">
+            <td>
+                <input type="checkbox" th:value="${banner.id}">
+            </td>
+            <td>
+                <p th:text="${banner.seq}"></p>
+            </td>
+            <td>
+                <a th:href="|@{/admin/banner/detail.do(id=${banner.id})}|" th:text="${banner.name}"></a>
+            </td>
+            <td>
+                <img th:src="${banner.urlFilename}" width="200" height="200" alt="배너이미지">
+            </td>
+            <td>
+                <p th:text="${banner.getRegDt()}"></p>
+            </td>
+        </tr>
+        <tr th:if="${#lists.size(bannerList) < 1}">
+            <td colspan="5">
+                <p class="centerText">배너가 없습니다.</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<form name="deleteForm" action="/admin/banner/delete.do" method="post">
+    <input type="hidden" name="idList">
+</form>
+
+</body>
+</html>

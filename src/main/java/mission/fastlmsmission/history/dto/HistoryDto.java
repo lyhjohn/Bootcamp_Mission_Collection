@@ -1,10 +1,10 @@
-package mission.fastlmsmission.member.history.dto;
+package mission.fastlmsmission.history.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mission.fastlmsmission.member.history.entity.History;
+import mission.fastlmsmission.history.entity.History;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

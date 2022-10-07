@@ -134,12 +134,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public List<CourseDto> frontList(CourseParam parameter) {
+
+        // 강의목록을 누르거나 전체보기를 누르면 categoryId가 0일 것임 -> 모든 강의 리스트를 다 보여줌
         if (parameter.getCategoryId() < 1) {
             List<Course> courseList = courseRepository.findAll();
             System.out.println("courseList = " + courseList);
             return CourseDto.of(courseList);
         }
 
+        // 특정 카테고리를 선택하면 categoryId가 1 이상일 것임 -> 해당 categoryId를 갖는 강의를 리스트로 전부 가져옴
         Optional<List<Course>> optionalCourses = courseRepository.findByCategoryId(parameter.getCategoryId());
         if (optionalCourses.isPresent()) {
             System.out.println("optionalCourses = " + optionalCourses);

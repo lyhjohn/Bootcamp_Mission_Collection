@@ -1,12 +1,12 @@
-package mission.fastlmsmission.member.history.service.impl;
+package mission.fastlmsmission.history.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.course.model.ServiceResult;
+import mission.fastlmsmission.history.dto.HistoryDto;
+import mission.fastlmsmission.history.service.HistoryService;
 import mission.fastlmsmission.member.entity.Member;
-import mission.fastlmsmission.member.history.dto.HistoryDto;
-import mission.fastlmsmission.member.history.entity.History;
-import mission.fastlmsmission.member.history.repository.HistoryRepository;
-import mission.fastlmsmission.member.history.service.HistoryService;
+import mission.fastlmsmission.history.entity.History;
+import mission.fastlmsmission.history.repository.HistoryRepository;
 import mission.fastlmsmission.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,7 @@ package mission.fastlmsmission.admin.dto.member;
 
 import lombok.*;
 import mission.fastlmsmission.member.entity.Member;
-import mission.fastlmsmission.member.history.entity.History;
+import mission.fastlmsmission.history.entity.History;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -150,7 +150,7 @@ public class AdminCourseController extends BaseController {
             String originalFilename = file.getOriginalFilename(); // 서버로 넘어온 파일의 오리지날 네임
             // 업로드한 파일이 저장되길 원하는 경로 설정 (경로에서 터미널 열고 pwd 명령어로 저장 경로 확인 가능)
             String baseLocalPath = "C:\\Users\\82108\\Desktop\\갓영한\\Spring MVC 2\\mvc2_source_v20210624 (1)\\mvc2\\fastlmsMission\\files\\";
-            String baseUrlPath = "/files";
+            String baseUrlPath = "files";
 
             String[] arrFileName = getNewSaveFile(baseLocalPath, baseUrlPath, originalFilename);
 
