@@ -4,8 +4,11 @@ import lombok.*;
 import mission.fastlmsmission.history.entity.History;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 @Entity
@@ -48,7 +51,7 @@ public class Member implements MemberCode{
 
 
     public void setHistoryList(History history) {
-        historyList.add(history);
+        this.historyList.add(history);
         history.setMember(this);
     }
 
@@ -62,4 +65,6 @@ public class Member implements MemberCode{
                 ", phoneNumber='" + phone + '\'' +
                 '}';
     }
+
+
 }

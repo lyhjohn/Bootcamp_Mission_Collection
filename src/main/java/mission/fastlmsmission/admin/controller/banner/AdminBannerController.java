@@ -5,6 +5,7 @@ import mission.fastlmsmission.admin.dto.banner.BannerDto;
 import mission.fastlmsmission.admin.model.banner.BannerInput;
 import mission.fastlmsmission.admin.model.banner.BannerParam;
 import mission.fastlmsmission.admin.service.banner.BannerService;
+import mission.fastlmsmission.course.controller.BaseController;
 import mission.fastlmsmission.course.exception.CourseException;
 import mission.fastlmsmission.course.model.ServiceResult;
 import org.springframework.stereotype.Controller;
@@ -20,24 +21,33 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class AdminBannerController {
+public class AdminBannerController extends BaseController {
 
     private final BannerService bannerService;
 
     @GetMapping("/banner/list.do")
-    public String list(Model model) {
+    public String list(Model model, BannerParam parameter) {
 
-        List<BannerDto> bannerList = bannerService.bannerList();
+        parameter.init();
 
+        List<BannerDto> bannerList = bannerService.bannerList(parameter);
+
+        if (bannerList == null || bannerList.size() < 1) {
+            return "/admin/banner/list";
+        }
+
+        long totalCount = bannerList.get(0).getTotalCount();
+
+        String queryString = parameter.getQueryString(); // 검색 후 페이지 이동해도 검색결과가 초기화되지 않도록 구현
+        String pagerHtml = super.getPagerHtml(totalCount, parameter.getPageEnd(), parameter.getPageIndex(),
+                queryString);
+
+
+        model.addAttribute("pager", pagerHtml);
+        model.addAttribute("totalCount", totalCount);
         model.addAttribute("bannerList", bannerList);
         return "/admin/banner/list";
     }
-
-//    @GetMapping("/banner/add.do")
-//    public String addBanner(Model model) {
-//
-//        return "/admin/banner/add";
-//    }
 
 
     @PostMapping("/banner/delete.do")

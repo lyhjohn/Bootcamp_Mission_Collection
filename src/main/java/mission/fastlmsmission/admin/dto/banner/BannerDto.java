@@ -32,6 +32,11 @@ public class BannerDto {
     private boolean openPublicYn;
     private long seq;
 
+    long totalCount;
+    long num;
+
+
+
     private String open;
 
 
@@ -61,4 +66,5 @@ public class BannerDto {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
         return this.regDt != null ? this.regDt.format(formatter) : "";
     }
+
 }

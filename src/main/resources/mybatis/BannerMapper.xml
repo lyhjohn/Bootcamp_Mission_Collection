@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mission.fastlmsmission.admin.mapper.MemberMapper">
+<mapper namespace="mission.fastlmsmission.admin.mapper.BannerMapper">
 
     <sql id="selectListWhere">
         <if test="searchType != null and searchValue != null">
@@ -28,21 +28,25 @@
                 </otherwise>
             </choose>
         </if>
+
     </sql>
 
 
     <select id="selectListCount" resultType="long">
         select count(*)
-        from member
+        from banner
         where 1 = 1
         <include refid="selectListWhere"/>
     </select>
 
-    <select id="selectList" resultType="mission.fastlmsmission.member.entity.Member">
+    <select id="selectList" resultType="mission.fastlmsmission.admin.dto.banner.BannerDto">
         select *
-        from member m where 1 = 1
+        from banner
+        where 1 = 1
         <include refid="selectListWhere"/>
+
         limit #{pageStart}, #{pageEnd}
     </select>
+
 
 </mapper>

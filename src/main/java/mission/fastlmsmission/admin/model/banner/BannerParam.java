@@ -1,12 +1,13 @@
 package mission.fastlmsmission.admin.model.banner;
 
 import lombok.Data;
+import mission.fastlmsmission.admin.model.CommonParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class BannerParam {
+public class BannerParam extends CommonParam {
     private Long id;
     private List<Long> idList;
 

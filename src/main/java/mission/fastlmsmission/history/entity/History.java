@@ -5,6 +5,7 @@ import mission.fastlmsmission.member.entity.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,5 +31,10 @@ public class History {
         history.setIp(ip);
         history.setUserAgent(userAgent);
         return history;
+    }
+
+    public String getLoginDtText() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd  HH:mm");
+        return loginDt != null ? loginDt.format(formatter) : "";
     }
 }

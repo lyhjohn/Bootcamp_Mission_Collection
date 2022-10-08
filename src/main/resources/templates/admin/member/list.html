@@ -74,6 +74,8 @@
             <th th:text="#{emailAuthYn}"></th>
             <th th:text="#{memberRegDt}"></th>
             <th th:text="#{adminYn}"></th>
+            <th th:text="#{memberStatus}"></th>
+            <th th:text="#{lastLoginDt}"></th>
         </tr>
         </thead>
         <tbody>
@@ -98,6 +100,9 @@
                 <p th:if="${member.userStatus == 'NORMAL'}">정상</p>
                 <p th:if="${member.userStatus == 'SUBMIT'}">가입승인중</p>
                 <p th:if="${member.userStatus == 'STOP'}">정지</p>
+            </td>
+            <td>
+                <p th:text="|${member.historyList[member.historyList.size() - 1].getLoginDtText()}|"></p>
             </td>
         </tr>
         </tbody>

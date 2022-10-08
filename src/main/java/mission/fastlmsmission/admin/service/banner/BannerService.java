@@ -12,7 +12,7 @@ import java.util.List;
 public interface BannerService {
 
 
-    List<BannerDto> bannerList();
+    List<BannerDto> bannerList(BannerParam parameter);
 
     ServiceResult add(BannerInput parameter, MultipartFile file);
 

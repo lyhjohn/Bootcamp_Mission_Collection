@@ -2,6 +2,8 @@ package mission.fastlmsmission.main.controller;
 
 import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.admin.dto.banner.BannerDto;
+import mission.fastlmsmission.admin.model.banner.BannerParam;
+import mission.fastlmsmission.admin.model.member.MemberParam;
 import mission.fastlmsmission.admin.service.banner.BannerService;
 import mission.fastlmsmission.components.MailComponents;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,8 @@ public class MainController {
     private final BannerService bannerService;
 
     @RequestMapping("/")
-    public String index(Model model) {
-        List<BannerDto> bannerList = bannerService.bannerList();
+    public String index(Model model, BannerParam parameter) {
+        List<BannerDto> bannerList = bannerService.bannerList(parameter);
 
         model.addAttribute("bannerList", bannerList);
 

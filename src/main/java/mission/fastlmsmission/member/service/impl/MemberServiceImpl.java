@@ -6,6 +6,8 @@ import mission.fastlmsmission.admin.mapper.MemberMapper;
 import mission.fastlmsmission.admin.model.member.MemberParam;
 import mission.fastlmsmission.components.MailComponents;
 import mission.fastlmsmission.course.model.ServiceResult;
+import mission.fastlmsmission.history.entity.History;
+import mission.fastlmsmission.history.repository.HistoryRepository;
 import mission.fastlmsmission.member.entity.Member;
 import mission.fastlmsmission.member.exception.MemberNotEmailAuthException;
 import mission.fastlmsmission.member.exception.MemberStopUserException;
@@ -39,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MailComponents mailComponents;
     private final MemberMapper memberMapper;
+    private final HistoryRepository historyRepository;
 
     @Override
     @Transactional
@@ -186,21 +189,27 @@ public class MemberServiceImpl implements MemberService {
         }
         return true;
     }
-
     @Override
     @Transactional
     public List<MemberDto> memberList(MemberParam parameter) {
         long totalCount = memberMapper.selectListCount(parameter);
-        List<MemberDto> list = memberMapper.selectList(parameter);
+        List<Member> list = memberMapper.selectList(parameter);
+
+        List<MemberDto> memberList = new ArrayList<>();
+
+        for (Member m : list) {
+            memberList.add(MemberDto.of(memberRepository.findById(m.getEmail()).get()));
+        }
+
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
-            for (MemberDto m: list) {
+            for (MemberDto m: memberList) {
                 m.setTotalCount(totalCount);
                 m.setSeq(totalCount - parameter.getPageStart() - i);
                 i++;
             }
         }
-        return list;
+        return memberList;
     }
 
     @Override

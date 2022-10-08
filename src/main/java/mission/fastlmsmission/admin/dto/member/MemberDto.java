@@ -68,4 +68,10 @@ public class MemberDto {
                 .build();
     }
 
+    public static List<MemberDto> of(List<Member> memberList) {
+        List<MemberDto> members = new ArrayList<>();
+        memberList.forEach(m -> members.add(MemberDto.of(m)));
+        return members;
+    }
+
 }

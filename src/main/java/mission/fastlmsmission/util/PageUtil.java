@@ -59,11 +59,9 @@ public class PageUtil {
         this.queryString = queryString;
     }
 
-    public PageUtil(long totalCount, long pageIndex, String queryString, long pageSize, long pageBlockSize) {
+    public PageUtil(long totalCount, long pageSize, long pageIndex) {
         this.totalCount = totalCount;
         this.pageSize = pageSize;
-        this.queryString = queryString;
-        this.pageBlockSize = pageBlockSize;
         this.pageIndex = pageIndex;
     }
 
@@ -107,6 +105,7 @@ public class PageUtil {
 
         return sb.toString();
     }
+
 
     private void init() {
 

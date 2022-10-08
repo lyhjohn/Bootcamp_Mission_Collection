@@ -2,7 +2,9 @@ package mission.fastlmsmission.admin.service.banner.impl;
 
 import lombok.RequiredArgsConstructor;
 import mission.fastlmsmission.admin.dto.banner.BannerDto;
+import mission.fastlmsmission.admin.dto.member.MemberDto;
 import mission.fastlmsmission.admin.entity.Banner;
+import mission.fastlmsmission.admin.mapper.BannerMapper;
 import mission.fastlmsmission.admin.model.banner.BannerInput;
 import mission.fastlmsmission.admin.model.banner.BannerParam;
 import mission.fastlmsmission.admin.repository.banner.BannerRepository;
@@ -21,18 +23,28 @@ import java.util.Optional;
 public class BannerServiceImpl implements BannerService {
 
     private final BannerRepository bannerRepository;
+    private final BannerMapper bannerMapper;
 
     @Override
     @Transactional
-    public List<BannerDto> bannerList() {
+    public List<BannerDto> bannerList(BannerParam parameter) {
         Optional<List<Banner>> optionalList = bannerRepository.findAllByOrderBySeqAsc();
         if (optionalList.isEmpty()) {
             return null;
         }
+        long totalCount = bannerMapper.selectListCount(parameter);
 
         List<Banner> bannerList = optionalList.get();
 
-        return BannerDto.of(bannerList);
+        List<BannerDto> banners = BannerDto.of(bannerList);
+        int i = 0;
+        for (BannerDto x : banners) {
+            x.setTotalCount(totalCount);
+            x.setNum(totalCount - parameter.getPageStart() - i);
+            i++;
+        }
+
+        return banners;
     }
 
     @Override
