@@ -45,6 +45,7 @@ public class Member implements MemberCode{
     private String addr;
     private String addrDetail;
 
+    private LocalDateTime loginDt;
     @OneToMany(mappedBy = "member")
     private List<History> historyList = new ArrayList<>();
 
@@ -67,4 +68,7 @@ public class Member implements MemberCode{
     }
 
 
+    public Member(LocalDateTime loginDt) {
+        this.loginDt = loginDt;
+    }
 }

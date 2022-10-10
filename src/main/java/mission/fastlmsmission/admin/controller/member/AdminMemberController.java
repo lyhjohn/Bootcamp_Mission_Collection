@@ -5,6 +5,7 @@ import mission.fastlmsmission.admin.dto.member.MemberDto;
 import mission.fastlmsmission.admin.model.member.MemberParam;
 import mission.fastlmsmission.admin.model.member.MemberInput;
 import mission.fastlmsmission.course.controller.BaseController;
+import mission.fastlmsmission.member.entity.Member;
 import mission.fastlmsmission.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

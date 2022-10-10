@@ -135,4 +135,12 @@ public class BannerServiceImpl implements BannerService {
 
         return new ServiceResult();
     }
+
+    @Override
+    @Transactional
+    public boolean findBySeq(long seq) {
+        Optional<Banner> optionalBanner = bannerRepository.findBySeq(seq);
+
+        return optionalBanner.isPresent();
+    }
 }

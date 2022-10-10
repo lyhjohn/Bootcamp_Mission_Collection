@@ -193,15 +193,18 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public List<MemberDto> memberList(MemberParam parameter) {
         long totalCount = memberMapper.selectListCount(parameter);
-        List<Member> list = memberMapper.selectList(parameter);
+        List<Member> members = memberMapper.selectList(parameter);
 
         List<MemberDto> memberList = new ArrayList<>();
 
-        for (Member m : list) {
-            memberList.add(MemberDto.of(memberRepository.findById(m.getEmail()).get()));
+
+        for (Member m : members) {
+            Optional<Member> optionalMember = memberRepository.findById(m.getEmail());
+            optionalMember.map(member -> memberList.add(MemberDto.of(member)));
+            optionalMember.ifPresent(member -> memberList.add(MemberDto.of(member)));
         }
 
-        if (!CollectionUtils.isEmpty(list)) {
+        if (!CollectionUtils.isEmpty(members)) {
             int i = 0;
             for (MemberDto m: memberList) {
                 m.setTotalCount(totalCount);
@@ -211,6 +214,8 @@ public class MemberServiceImpl implements MemberService {
         }
         return memberList;
     }
+
+
 
     @Override
     @Transactional
@@ -333,4 +338,5 @@ public class MemberServiceImpl implements MemberService {
 
         return new ServiceResult();
     }
+
 }

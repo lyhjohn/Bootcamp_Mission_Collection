@@ -21,4 +21,6 @@ public interface BannerService {
     BannerDto findOne(BannerInput param);
 
     ServiceResult update(BannerInput parameter, MultipartFile file);
+
+    boolean findBySeq(long seq);
 }

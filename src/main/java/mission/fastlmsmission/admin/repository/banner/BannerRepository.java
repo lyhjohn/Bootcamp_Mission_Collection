@@ -14,4 +14,6 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
     Optional<Banner> findByName(String name);
 
     Optional<Banner> findByUrl(String url);
+
+    Optional<Banner> findBySeq(long seq);
 }

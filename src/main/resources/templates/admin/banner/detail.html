@@ -23,6 +23,12 @@
         .centerText {
             text-align: center;
         }
+
+        .field-error {
+            border-color: red;
+            color: red;
+        }
+
     </style>
 </head>
 <body>
@@ -41,6 +47,8 @@
                 <td>
                     <input type="text" name="name" th:value="${banner?.name}" th:if="${editMode}">
                     <input type="text" name="name" th:value="${banner?.name}" th:if="${!editMode}" required>
+<!--                    <div class="field-error" th:errors="*{banner.name}">-->
+
                 </td>
             </tr>
             <tr>

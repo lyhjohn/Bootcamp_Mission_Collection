@@ -1,6 +1,7 @@
 package mission.fastlmsmission.admin.dto.member;
 
 import lombok.*;
+import mission.fastlmsmission.history.dto.HistoryDto;
 import mission.fastlmsmission.member.entity.Member;
 import mission.fastlmsmission.history.entity.History;
 
@@ -34,7 +35,7 @@ public class MemberDto {
     String zipcode;
     String addr;
     String addrDetail;
-    List<History> historyList = new ArrayList<>();
+    List<HistoryDto> historyList = new ArrayList<>();
 
     public String getRegDtText() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
@@ -48,6 +49,13 @@ public class MemberDto {
 
 
     public static MemberDto of(Member member) {
+        List<HistoryDto> historyDtoList = new ArrayList<>();
+
+        for (History h : member.getHistoryList()) {
+            historyDtoList.add(HistoryDto.of(h));
+        }
+
+
         return MemberDto.builder()
                 .email(member.getEmail())
                 .userName(member.getUserName())
@@ -64,7 +72,7 @@ public class MemberDto {
                 .zipcode(member.getZipcode())
                 .addr(member.getAddr())
                 .addrDetail(member.getAddrDetail())
-                .historyList(member.getHistoryList())
+                .historyList(historyDtoList)
                 .build();
     }
 
