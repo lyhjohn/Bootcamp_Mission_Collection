@@ -200,7 +200,6 @@ public class MemberServiceImpl implements MemberService {
 
         for (Member m : members) {
             Optional<Member> optionalMember = memberRepository.findById(m.getEmail());
-            optionalMember.map(member -> memberList.add(MemberDto.of(member)));
             optionalMember.ifPresent(member -> memberList.add(MemberDto.of(member)));
         }
 

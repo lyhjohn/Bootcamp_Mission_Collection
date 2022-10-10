@@ -25,7 +25,7 @@ public class Banner {
     // /files/2022/10/06/5e6063dde1894462b6d4cc426ceccb80.png
     private String urlFilename;
     private String url;
-
+    
 
     private String name;
     private LocalDateTime regDt;
