@@ -1,0 +1,3 @@
+api doc = https://openweathermap.org/current
+api link = https://api.openweathermap.org/data/2.5/weather?q={city name}&appid=95020931ec8f44ab98b9db15c0ae956c
+key = 95020931ec8f44ab98b9db15c0ae956c
