@@ -114,4 +114,9 @@ public class DiaryService {
 
         return findDiary;
     }
+
+    @Transactional
+    public void deleteDiary(LocalDate date) {
+        diaryRepository.deleteAllByDate(date);
+    }
 }
