@@ -4,6 +4,7 @@
 wifiPrint.jsp
 
 <hr>
+
 ## 구현 기능
 
 ### 내 위치 가져오기: wifi.js 통해서 위치 가져옵니다.
