@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.mission1.dto.wifiDto" %>
-<%@ page import="com.example.mission1.dto.historyDto" %>
-<%@ page import="com.example.mission1.wifi.wifiService" %>
+<%@ page import="com.example.mission1.wifi.dto.WifiDto" %>
+<%@ page import="com.example.mission1.wifi.dto.HistoryDto" %>
+<%@ page import="com.example.mission1.wifi.service.WifiService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -46,9 +46,9 @@
     <tbody>
     <tr>
             <%
-            List<historyDto> historyList = (List<historyDto>) request.getAttribute("historyList");
+            List<HistoryDto> historyList = (List<HistoryDto>) request.getAttribute("historyList");
             if (historyList != null) {
-            for (historyDto dto : historyList) {
+            for (HistoryDto dto : historyList) {
             %>
     </tr>
         <td><%=dto.getID()%>

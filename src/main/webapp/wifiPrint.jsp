@@ -1,5 +1,5 @@
 
-<%@ page import="com.example.mission1.dto.wifiDto" %>
+<%@ page import="com.example.mission1.wifi.dto.WifiDto" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
@@ -74,9 +74,9 @@
     <tbody>
     <tr>
             <%
-            	List<wifiDto> wifiList = (List<wifiDto>) request.getAttribute("wifiList");
+            	List<WifiDto> wifiList = (List<WifiDto>) request.getAttribute("wifiList");
           		if(wifiList != null) {
-                for (wifiDto dto: wifiList) {
+                for (WifiDto dto: wifiList) {
             %>
     <tr>
         <td><%=dto.getDistance()%></td>

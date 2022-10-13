@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 
 @NoArgsConstructor
-public class apiConnect { // OpenAPI에 접근해서 String 객체로 데이터를 가져온다.
+public class ApiConnect { // OpenAPI에 접근해서 String 객체로 데이터를 가져온다.
 
     public String getApi(int pageIdx) {
 

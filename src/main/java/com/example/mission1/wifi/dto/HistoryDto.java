@@ -1,4 +1,4 @@
-package com.example.mission1.dto;
+package com.example.mission1.wifi.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @Setter
-public class historyDto {
+public class HistoryDto {
 
     int ID;
     String X;
     String Y;
     String registeredAt;
-    List<historyDto> historyList = new ArrayList<>();
+    List<HistoryDto> historyList = new ArrayList<>();
 
 }

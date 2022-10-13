@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>com.example.mission1.wifi.Controller</servlet-class>
+        <servlet-class>com.example.mission1.wifi.controller.WifiController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>

@@ -1,5 +1,5 @@
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="com.example.mission1.wifi.wifiService" %>
+<%@ page import="com.example.mission1.wifi.service.WifiService" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
@@ -13,10 +13,10 @@
 
 <body>
 <%
-    wifiService ws = new wifiService();
+    WifiService ws = new WifiService();
     int totalCount = 0;
     try {
-        totalCount = ws.wifi_Insert();
+        totalCount = ws.wifiInsert();
     } catch (ClassNotFoundException | SQLException e) {
         throw new RuntimeException(e);
     }

@@ -1,6 +1,8 @@
-package com.example.mission1.wifi;
+package com.example.mission1.wifi.controller;
 
-import com.example.mission1.dto.wifiDto;
+import com.example.mission1.wifi.dto.WifiDto;
+import com.example.mission1.wifi.service.HistoryService;
+import com.example.mission1.wifi.service.WifiService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-public class Controller extends HttpServlet {
+public class WifiController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -21,18 +23,17 @@ public class Controller extends HttpServlet {
         System.out.println("url = " + Arrays.toString(uri));
         String command = uri.length < 2 ? uri[0] : uri[1];
         String path = "/";
-        wifiService ws = new wifiService();
+        WifiService ws = new WifiService();
         
         if (command.equals("/get-wifi")) {
             path = "/wifiPrint.jsp";
-            System.out.println("get-wifi 서블릿 매핑 성공");
             try {
                 String lat = req.getParameter("lat");
                 String lnt = req.getParameter("lnt");
 
                 System.out.println("lat : " + lat + " lnt : " + lnt);
 
-                List<wifiDto> wifiList = ws.WIFI_Select(lat, lnt);
+                List<WifiDto> wifiList = ws.wifiSelect(lat, lnt);
                 System.out.println("Select 완료");
 
                 req.setAttribute("wifiList", wifiList);
@@ -44,9 +45,8 @@ public class Controller extends HttpServlet {
         
         if (command.equals("/history")) {
             path = "/history.jsp";
-            System.out.println("history 서블릿 매핑 성공");
 
-            saveHistory save_history = new saveHistory();
+            HistoryService save_history = new HistoryService();
             req.setAttribute("historyList", save_history.getHistory());
         }
 
