@@ -1,4 +1,4 @@
-package com.example.mission1.wifi;
+package com.example.mission1.wifi.api;
 
 import lombok.NoArgsConstructor;
 

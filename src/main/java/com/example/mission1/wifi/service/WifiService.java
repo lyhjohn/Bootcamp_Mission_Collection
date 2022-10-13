@@ -2,7 +2,7 @@ package com.example.mission1.wifi.service;
 
 
 import com.example.mission1.wifi.dto.WifiDto;
-import com.example.mission1.wifi.ApiConnect;
+import com.example.mission1.wifi.api.ApiConnect;
 import lombok.Getter;
 import lombok.Setter;
 
