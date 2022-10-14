@@ -18,6 +18,16 @@ openweathermap:
   key: 95020931ec8f44ab98b9db15c0ae956c
 
 
+logging:
+  file:
+    path: logback-spring.xml
+#    max-size: 500MB
+#    max-history: 10
+#  level:
+#    root: info
+#    me.hong.kotlinspring: debug
+
+
 
 
 

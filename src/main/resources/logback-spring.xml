@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!--    변수값 설정-->
+    <property name="LOGS_PATH" value="./logs"/>
+    <!--    INFO 레벨 이상의 로그들만 저장할것-->
+    <property name="LOGS_LEVEL" value="INFO"/>
+
+    <!--    ConsoleAppender : 콘솔에 저장할 것들을 설정해두는 곳-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--    출력 패턴 설정 -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm} %-5level %logger {36} - %msg %n</pattern>
+        </layout>
+    </appender>
+
+    <!--    RollingFileAppender : 파일에 저장할 것들을 설정해두는 곳 / Rolling: 특정 일수가 지나면 가장 오래된 로그를 지워줌 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--        파일명과 경로 설정 -->
+        <file>${LOGS_PATH}/log_file.log</file>
+        <!--        출력 패턴 설정 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--        Rolling 정책-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_PATH}/%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+<!--                파일당 최고 용량 -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <root level="${LOGS_LEVEL}">
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
