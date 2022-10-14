@@ -13,6 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Transactional
 class JdbcMemoRepositoryTest {
 
     @Autowired
@@ -22,7 +23,6 @@ class JdbcMemoRepositoryTest {
     JdbcMemoRepository jdbcMemoRepository;
 
     @Test
-    @Transactional
     void testJdbc() {
         Memo memo = new Memo();
         memo.setText("test1");
@@ -39,9 +39,7 @@ class JdbcMemoRepositoryTest {
     }
 
 
-
     @Test
-    @Transactional
     void findTest() {
         //given
         Memo memo = new Memo();
@@ -56,7 +54,6 @@ class JdbcMemoRepositoryTest {
     }
 
     @Test
-    @Transactional
     void findByIdTest() {
 
         //given
