@@ -2,6 +2,7 @@ package zerobase.stock.model;
 
 import java.util.List;
 import lombok.Data;
+import zerobase.stock.persist.entity.MemberEntity;
 
 public class Auth {
 

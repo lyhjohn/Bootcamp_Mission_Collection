@@ -1,9 +1,11 @@
-package zerobase.stock.model;
+package zerobase.stock.persist.entity;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,8 @@ public class MemberEntity implements UserDetails {
 	private Long id;
 	private String username;
 	private String password;
+
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
 	@Override

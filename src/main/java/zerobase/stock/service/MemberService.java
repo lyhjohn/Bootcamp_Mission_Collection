@@ -1,19 +1,16 @@
 package zerobase.stock.service;
 
-import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import zerobase.stock.exception.impl.AlreadyExistUserException;
-import zerobase.stock.model.Auth;
 import zerobase.stock.model.Auth.SignIn;
 import zerobase.stock.model.Auth.SignUp;
-import zerobase.stock.model.MemberEntity;
+import zerobase.stock.persist.entity.MemberEntity;
 import zerobase.stock.persist.MemberRepository;
 
 @Slf4j
