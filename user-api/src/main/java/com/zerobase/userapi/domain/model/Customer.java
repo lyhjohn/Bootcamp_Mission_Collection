@@ -19,6 +19,7 @@ import lombok.ToString;
 import org.hibernate.envers.AuditOverride;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

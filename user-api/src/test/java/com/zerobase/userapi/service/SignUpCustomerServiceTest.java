@@ -2,8 +2,10 @@ package com.zerobase.userapi.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.zerobase.userapi.application.SignUpApplication;
 import com.zerobase.userapi.domain.SignUpForm;
 import com.zerobase.userapi.domain.model.Customer;
+import com.zerobase.userapi.domain.repository.CustomerRepository;
 import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -20,6 +22,11 @@ class SignUpCustomerServiceTest {
 	@Autowired
 	private SignUpCustomerService service;
 
+	@Autowired
+	private SignUpApplication signUpApplication;
+	@Autowired
+	private CustomerRepository customerRepository;
+
 	@Test
 	void signUp() {
 		SignUpForm form = SignUpForm.builder()
@@ -29,8 +36,6 @@ class SignUpCustomerServiceTest {
 			.password("1234")
 			.phone("01012345678")
 			.build();
-		Customer c = service.signUp(form);
-		System.out.println("c = " + c);
-		assertThat(c.getId()).isNotNull();
+		signUpApplication.customerSignUp(form);
 	}
 }
