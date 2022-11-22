@@ -34,7 +34,6 @@ public class SignUpApplication {
 		}
 
 		Customer customer = signUpCustomerService.signUp(form);
-		LocalDateTime now = LocalDateTime.now();
 		String code = getRandomCode();
 		SendMailForm sendMailForm = SendMailForm.builder()
 			.from("dladygks506@gmail.com")
@@ -42,8 +41,8 @@ public class SignUpApplication {
 			.subject("Verification Email")
 			.text(getVerificationEmailBody(customer.getEmail(), customer.getName(), code))
 			.build();
-		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
-		log.info("Send mail result:{}", result.getBody());
+//		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
+//		log.info("Send mail result:{}", result.getBody());
 		signUpCustomerService.changeCustomerValidateEmail(customer.getId(), code);
 		return "회원 가입에 성공하였습니다.";
 	}

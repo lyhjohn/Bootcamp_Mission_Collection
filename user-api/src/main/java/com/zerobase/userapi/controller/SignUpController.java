@@ -4,7 +4,6 @@ import com.zerobase.userapi.application.SignUpApplication;
 import com.zerobase.userapi.domain.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +20,7 @@ public class SignUpController {
 
 	@PostMapping
 	public ResponseEntity<String> customerSignUp(@RequestBody SignUpForm form) {
+		System.out.println("회원 가입 요청");
 		return ResponseEntity.ok(signUpApplication.customerSignUp(form));
 	}
 
