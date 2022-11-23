@@ -9,7 +9,6 @@ import com.zerobase.userapi.domain.model.CustomerBalanceHistory;
 import com.zerobase.userapi.domain.repository.customer.CustomerBalanceHistoryRepository;
 import com.zerobase.userapi.domain.repository.customer.CustomerRepository;
 import com.zerobase.userapi.exception.CustomException;
-import com.zerobase.userapi.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

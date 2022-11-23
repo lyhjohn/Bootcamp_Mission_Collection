@@ -1,0 +1,43 @@
+### 회원가입 (고객)
+POST http://localhost:8081/signUp/customer
+Content-Type: application/json
+
+{
+    "email":"dladygks126121@gmail.com",
+    "password":"1234",
+    "name":"string",
+    "birth":"2020-01-01",
+    "phone":"string"
+}
+
+### 로그인 (고객)
+POST http://localhost:8081/signIn/customer
+Content-Type: application/json
+
+{
+  "email":"dladygks506@gmail.com",
+  "password":"1234"
+}
+
+### 회원 정보 조회 (고객)
+GET http://localhost:8081/customer/getInfo
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwWk43bURyLzVjWi9qeW95eTlDL3J0cTVpKzMyMkZ5R3psQU5jT01ObWRBPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE2NjkyMDkzMDMsImV4cCI6MTY2OTI5NTcwM30.TwKAm2ZLAfcWEvcJpf9FKoFDxOY7vN26fEPjVwzc8Us
+
+
+### 잔액 변경 (고객)
+POST http://localhost:8081/customer/balance
+Content-Type: application/json
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwWk43bURyLzVjWi9qeW95eTlDL3J0cTVpKzMyMkZ5R3psQU5jT01ObWRBPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiQ1VTVE9NRVIiLCJpYXQiOjE2NjkyMDkzMDMsImV4cCI6MTY2OTI5NTcwM30.TwKAm2ZLAfcWEvcJpf9FKoFDxOY7vN26fEPjVwzc8Us
+
+{
+  "from": "임요한",
+  "message": "안녕",
+  "money": "500000"
+}
+
+
+####################
+
+### 회원가입 (셀러)
+
+### 로그인 (셀러)
