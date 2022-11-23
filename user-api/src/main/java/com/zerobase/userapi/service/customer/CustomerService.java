@@ -1,9 +1,9 @@
-package com.zerobase.userapi.service;
+package com.zerobase.userapi.service.customer;
 
 import static com.zerobase.userapi.exception.ErrorCode.LOGIN_CHECK_FAIL;
 
 import com.zerobase.userapi.domain.model.Customer;
-import com.zerobase.userapi.domain.repository.CustomerRepository;
+import com.zerobase.userapi.domain.repository.customer.CustomerRepository;
 import com.zerobase.userapi.exception.CustomException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.zerobase.userapi.domain.repository;
+package com.zerobase.userapi.domain.repository.customer;
 
 import com.zerobase.userapi.domain.model.Customer;
 import java.util.Optional;

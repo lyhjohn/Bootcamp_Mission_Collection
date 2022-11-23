@@ -1,4 +1,4 @@
-package com.zerobase.userapi.service;
+package com.zerobase.userapi.service.customer;
 
 import static com.zerobase.userapi.exception.ErrorCode.ALREADY_VERIFY;
 import static com.zerobase.userapi.exception.ErrorCode.EXPIRE_CODE;
@@ -7,7 +7,7 @@ import static com.zerobase.userapi.exception.ErrorCode.WRONG_VERIFICATION_CODE;
 
 import com.zerobase.userapi.domain.SignUpForm;
 import com.zerobase.userapi.domain.model.Customer;
-import com.zerobase.userapi.domain.repository.CustomerRepository;
+import com.zerobase.userapi.domain.repository.customer.CustomerRepository;
 import com.zerobase.userapi.exception.CustomException;
 import java.time.LocalDateTime;
 import java.util.Locale;

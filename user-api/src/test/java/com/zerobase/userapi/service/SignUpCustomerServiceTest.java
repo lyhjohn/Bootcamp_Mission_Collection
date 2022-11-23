@@ -4,11 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.zerobase.userapi.application.SignUpApplication;
 import com.zerobase.userapi.domain.SignUpForm;
-import com.zerobase.userapi.domain.model.Customer;
-import com.zerobase.userapi.domain.repository.CustomerRepository;
+import com.zerobase.userapi.domain.repository.customer.CustomerRepository;
+import com.zerobase.userapi.service.customer.SignUpCustomerService;
 import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,12 +1,9 @@
 package com.zerobase.userapi.domain;
 
-import com.zerobase.userapi.service.SignUpCustomerService;
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @NoArgsConstructor
