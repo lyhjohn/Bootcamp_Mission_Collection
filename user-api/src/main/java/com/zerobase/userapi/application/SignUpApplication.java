@@ -46,8 +46,8 @@ public class SignUpApplication {
 			.subject("Verification Email")
 			.text(getVerificationEmailBody(customer.getEmail(), customer.getName(), "Customer", code))
 			.build();
-		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
-		log.info("Send mail result:{}", result.getBody());
+//		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
+//		log.info("Send mail result:{}", result.getBody());
 		signUpCustomerService.changeCustomerValidateEmail(customer.getId(), code);
 		return "회원 가입에 성공하였습니다.";
 	}
@@ -69,8 +69,8 @@ public class SignUpApplication {
 			.subject("Verification Email")
 			.text(getVerificationEmailBody(seller.getEmail(), seller.getName(), "Seller", code))
 			.build();
-		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
-		log.info("Send mail result:{}", result.getBody());
+//		ResponseEntity<String> result = mailgunClient.sendEmail(sendMailForm);
+//		log.info("Send mail result:{}", result.getBody());
 		sellerService.changeSellerValidateEmail(seller.getId(), code);
 		return "회원 가입에 성공하였습니다.";
 	}
@@ -79,7 +79,7 @@ public class SignUpApplication {
 		StringBuilder builder = new StringBuilder();
 		return builder.append("Hello ").append(name)
 			.append("! Please Click Link for verification.\n\n")
-			.append("http://localhost:8081/signup/customer/verify?email=")
+			.append("http://localhost:8081/signUp/customer/verify?email=")
 			.append(email)
 			.append("&code=")
 			.append(code).toString();

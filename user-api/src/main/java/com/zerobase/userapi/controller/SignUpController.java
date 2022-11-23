@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/signup")
+@RequestMapping("/signUp")
 public class SignUpController {
 
 	private final SignUpApplication signUpApplication;

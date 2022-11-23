@@ -1,6 +1,7 @@
 package com.zerobase.userapi.service.customer;
 
 import static com.zerobase.userapi.exception.ErrorCode.LOGIN_CHECK_FAIL;
+import static com.zerobase.userapi.exception.ErrorCode.NOT_AUTHORIZATION;
 
 import com.zerobase.userapi.domain.model.Customer;
 import com.zerobase.userapi.domain.repository.customer.CustomerRepository;
@@ -22,8 +23,13 @@ public class CustomerService {
 	}
 
 	public Customer findValidCustomerByEmailAndPassword(String email, String password) {
-		return customerRepository.findByEmail(email).stream()
-			.filter(c -> c.isVerify() && c.getPassword().equals(password)).findFirst()
+		Customer customer = customerRepository.findByEmail(email).stream()
+			.filter(c -> c.getPassword().equals(password)).findFirst()
 			.orElseThrow(() -> new CustomException(LOGIN_CHECK_FAIL));
+
+		if (!customer.isVerify()) {
+			throw new CustomException(NOT_AUTHORIZATION);
+		}
+		return customer;
 	}
 }
