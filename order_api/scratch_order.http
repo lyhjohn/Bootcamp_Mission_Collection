@@ -1,0 +1,33 @@
+### ADD_PRODUCT
+POST http://localhost:8082/seller/product
+Content-Type: application/json
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwWk43bURyLzVjWi9qeW95eTlDL3J0cTVpKzMyMkZ5R3psQU5jT01ObWRBPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNjY5MzcxMTMwLCJleHAiOjE2Njk0NTc1MzB9.o9-bbHWQ5C0AeBhXeW3JrGgsE9N_CNQxfHAsCe7IqSU
+
+
+{
+  "name": "name",
+  "description": "description",
+  "addProductItemFormList": [
+    {
+      "name": "productName",
+      "price": 1000,
+      "count": 1
+    },
+    {
+      "name": "productName2",
+      "price": 2000,
+      "count": 2
+    }
+  ]
+}
+
+### ADD_PRODUCT_ITEM
+POST http://localhost:8082/seller/productItem
+Content-Type: application/json
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwWk43bURyLzVjWi9qeW95eTlDL3J0cTVpKzMyMkZ5R3psQU5jT01ObWRBPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNjY5MzcxMTMwLCJleHAiOjE2Njk0NTc1MzB9.o9-bbHWQ5C0AeBhXeW3JrGgsE9N_CNQxfHAsCe7IqSU
+
+{
+  "name": "productItem1",
+  "price": 50000,
+  "count": 3
+}
