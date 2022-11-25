@@ -53,6 +53,9 @@ public class JwtAuthenticationProvider {
 		System.out.println("c.getSubject() = " + Aes256Util.decrypt(c.getSubject()));
 		System.out.println("c.getId() = " + Aes256Util.decrypt(c.getId()));
 		System.out.println("getClass() = " + Aes256Util.decrypt(c.getSubject()).getClass());
+
+		// requireNonNull: 이 부분에서 널이 발생 시 즉시 널포인트 에러 발생.
+		// 원래라면 널이 나와도 뒤에서 이 널값을 사용하지 않는 이상 에러가 발생하지 않음
 		return new UserVo(Long.valueOf(Objects.requireNonNull(Aes256Util.decrypt(c.getId()))),
 			Aes256Util.decrypt(c.getSubject()));
 	}
