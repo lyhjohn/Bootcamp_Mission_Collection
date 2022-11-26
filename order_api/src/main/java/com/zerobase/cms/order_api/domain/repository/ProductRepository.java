@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //	Optional<Product> findWithProductItemsById(Long id);
 
 	Optional<Product> findBySellerId(Long sellerId);
+	Optional<Product> findByName(String name);
+
+	Optional<Product> findBySellerIdAndId(Long sellerId, Long id);
 }

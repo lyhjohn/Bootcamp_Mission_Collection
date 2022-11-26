@@ -27,7 +27,7 @@ import org.hibernate.envers.Audited;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Audited // 변경 이력 추적
+@Audited // 변경 이력 추적(변경이력 저장한 테이블이 생성됨)
 @AuditOverride(forClass = BaseEntity.class) // BaseEntity의 변경이력도 함께 추적
 public class Product extends BaseEntity {
 
