@@ -1,11 +1,9 @@
 package com.zerobase.cms.order_api.service;
 
-import static com.zerobase.cms.order_api.exception.ErrorCode.NOT_FOUND_PRODUCT;
-import static com.zerobase.cms.order_api.exception.ErrorCode.SAME_ITEM_NAME;
-
 import com.zerobase.cms.order_api.domain.model.Product;
 import com.zerobase.cms.order_api.domain.model.ProductItem;
 import com.zerobase.cms.order_api.domain.product.AddProductItemForm;
+import com.zerobase.cms.order_api.domain.product.UpdateProductItemForm;
 import com.zerobase.cms.order_api.domain.repository.ProductItemRepository;
 import com.zerobase.cms.order_api.domain.repository.ProductRepository;
 import com.zerobase.cms.order_api.exception.CustomException;
@@ -14,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.zerobase.cms.order_api.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +42,17 @@ public class ProductItemService {
 		productItem.setProduct(product);
 		product.getProductItemList().add(productItem);
 		return productItemRepository.save(productItem);
+	}
+
+	@Transactional
+	public ProductItem updateProductItem(Long sellerId, UpdateProductItemForm form) {
+		ProductItem productItem = productItemRepository.findById(form.getId())
+				.filter(x -> x.getSellerId().equals(sellerId))
+				.orElseThrow(() -> new CustomException(NOT_FOUND_ITEM));
+
+		productItem.setCount(form.getCount());
+		productItem.setName(form.getName());
+		productItem.setPrice(form.getPrice());
+		return productItem;
 	}
 }
