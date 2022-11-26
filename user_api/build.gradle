@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.zerobase.cms'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+bootJar{enabled = false}
+jar{enabled = true}
+
+dependencies {
+    implementation project(':zerobase-domain')
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'mysql:mysql-connector-java:8.0.30'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'com.h2database:h2:'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.5'
+
+//  데이터 변경이력 로깅
+    implementation 'org.springframework.data:spring-data-envers:2.7.5'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+    //테스트에서 lombok 사용
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
