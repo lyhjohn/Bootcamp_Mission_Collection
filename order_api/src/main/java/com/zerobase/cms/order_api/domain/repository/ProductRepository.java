@@ -2,6 +2,8 @@ package com.zerobase.cms.order_api.domain.repository;
 
 import com.zerobase.cms.order_api.domain.model.Product;
 import com.zerobase.cms.order_api.domain.model.ProductItem;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
@@ -15,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //	@EntityGraph(attributePaths = {"productItems"}, type = EntityGraphType.LOAD)
 //	Optional<Product> findWithProductItemsById(Long id);
 
-	Optional<Product> findBySellerId(Long sellerId);
+	List<Product> findBySellerId(Long sellerId);
 	Optional<Product> findByName(String name);
 
 	Optional<Product> findBySellerIdAndId(Long sellerId, Long id);

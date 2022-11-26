@@ -39,6 +39,7 @@ public class Product extends BaseEntity {
 	private String description; // 상세설명
 
 	// ProductItem 레파지토리에 따로 저장을 안해줘도, Product가 저장되면서 함께 저장된다!!!!!
+	// ProductItem에 Product객체도 자동으로 set 됨!
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 	@Default
 	private List<ProductItem> productItemList = new ArrayList<>();

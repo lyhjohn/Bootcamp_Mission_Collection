@@ -11,7 +11,10 @@ import com.zerobase.cms.order_api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.zerobase.cms.order_api.exception.ErrorCode.*;
@@ -23,9 +26,12 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product findProduct(Long sellerId) {
-        return productRepository.findBySellerId(sellerId).orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
+    public List<Product> findProduct(Long sellerId) {
+        List<Product> products = productRepository.findBySellerId(sellerId);
+
+        return CollectionUtils.isEmpty(products) ? Collections.emptyList() : products;
     }
+
 
     @Transactional
     public Product addProduct(Long sellerId, AddProductForm form) {
@@ -53,5 +59,12 @@ public class ProductService {
             productItem.setPrice(itemForm.getPrice());
         }
         return product;
+    }
+
+    @Transactional
+    public void deleteProduct(Long sellerId, Long productId) {
+        Product product = productRepository.findBySellerIdAndId(sellerId, productId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
+        productRepository.delete(product);
     }
 }

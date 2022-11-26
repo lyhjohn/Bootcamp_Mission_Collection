@@ -37,7 +37,7 @@ public class ProductItem extends BaseEntity {
 
 	// 연관된 엔티티에 엔티티 상태를 전파함(Transient, Persistent, Detached, Removed)
 	// fetch는 연관된 엔티티를 한번에 가져올지 말지를 결정
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
 
