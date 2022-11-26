@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/seller")
@@ -20,9 +22,9 @@ public class SellerProductController {
     private final JwtAuthenticationProvider provider;
 
     @GetMapping("/product")
-    public ResponseEntity<ProductDto> findProduct(@RequestHeader(name = "X_AUTH_TOKEN") String token, Long sellerId) {
-        Product product = productService.findProduct(sellerId);
-        return ResponseEntity.ok(ProductDto.from(product));
+    public ResponseEntity<List<ProductDto>> findProduct(Long sellerId) {
+        List<Product> products = productService.findProduct(sellerId);
+        return ResponseEntity.ok(ProductDto.fromList(products));
     }
 
     @PostMapping("/product")
@@ -47,10 +49,24 @@ public class SellerProductController {
     }
 
     @PutMapping("/updateProductItem")
-    public ResponseEntity<ProductItemDto> updateProduct(@RequestHeader(name = "X_AUTH_TOKEN") String token,
-                                                        @RequestBody UpdateProductItemForm form) {
+    public ResponseEntity<ProductItemDto> updateProductItem(@RequestHeader(name = "X_AUTH_TOKEN") String token,
+                                                            @RequestBody UpdateProductItemForm form) {
         ProductItem productItem = productItemService.updateProductItem(provider.getUserVo(token).getId(), form);
         return ResponseEntity.ok(ProductItemDto.from(productItem));
+    }
+
+    @DeleteMapping("/deleteProduct")
+    public ResponseEntity<Void> deleteProduct(@RequestHeader(name = "X_AUTH_TOKEN") String token,
+                                                  @RequestParam(name = "id") Long productId) {
+        productService.deleteProduct(provider.getUserVo(token).getId(), productId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/deleteProductItem")
+    public ResponseEntity<Void> deleteProductItem(@RequestHeader(name = "X_AUTH_TOKEN") String token,
+                                                  @RequestParam(name = "id") Long productItemId) {
+        productItemService.deleteProductItem(provider.getUserVo(token).getId(), productItemId);
+        return ResponseEntity.ok().build();
     }
 
 }

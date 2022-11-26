@@ -42,4 +42,8 @@ public class ProductDto {
                 )
                 .build();
     }
+
+    public static List<ProductDto> fromList(List<Product> products) {
+        return products.stream().map(ProductDto::from).collect(Collectors.toList());
+    }
 }
