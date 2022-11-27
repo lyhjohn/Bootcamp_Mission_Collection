@@ -43,7 +43,20 @@ public class ProductDto {
                 .build();
     }
 
+    public static ProductDto withoutItemsFrom(Product product) {
+        return ProductDto.builder()
+                .id(product.getId())
+                .sellerId(product.getSellerId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .build();
+    }
+
     public static List<ProductDto> fromList(List<Product> products) {
         return products.stream().map(ProductDto::from).collect(Collectors.toList());
+    }
+
+    public static List<ProductDto> withoutProductItemsFromList(List<Product> products) {
+        return products.stream().map(ProductDto::withoutItemsFrom).collect(Collectors.toList());
     }
 }
