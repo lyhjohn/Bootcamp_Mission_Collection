@@ -20,6 +20,7 @@ public class Cart {
     private Long customerId;
     private List<Product> products = new ArrayList<>();
     private List<String> messages = new ArrayList<>();
+    private int totalPrice;
 
     public void addMessage(String message) {
         this.messages.add(message);

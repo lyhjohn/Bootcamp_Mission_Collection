@@ -20,6 +20,10 @@ public class RedisConfig {
 		
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		StringRedisSerializer serializer = new StringRedisSerializer();
+		/**
+		 * Spring - Redis 간 데이터 직렬화, 역직렬화 시 사용하는 방식이 JDK 직렬화 방식이다.
+		 * 동작에는 문제가 없지만 redis-cli를 통해 데이터를 보려고 할 때 알아볼 수 없는 형태로 출력되기 때문에 적용하는 설정.
+		 */
 		redisTemplate.setKeySerializer(serializer);
 		redisTemplate.setValueSerializer(serializer);
 		redisTemplate.setHashKeySerializer(serializer);
