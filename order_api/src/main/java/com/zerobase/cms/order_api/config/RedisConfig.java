@@ -15,6 +15,9 @@ public class RedisConfig {
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
+		// serializetion(직렬화): 객체를 옮기기 쉬운 형태로 변환
+		// deserializetion(역직렬화): 직렬화와 반대. 스트림->객체로 재구성
+		
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		StringRedisSerializer serializer = new StringRedisSerializer();
 		redisTemplate.setKeySerializer(serializer);
