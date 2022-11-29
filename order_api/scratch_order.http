@@ -97,19 +97,24 @@ X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJocHdQK2lwOFp6SmVNbzMyWkMwWmpGazI4K
 ### 카트 추가
 POST http://localhost:8082/customer/cart
 Content-Type: application/json
-X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJocHdQK2lwOFp6SmVNbzMyWkMwWmpGazI4K3dsZWU5MEV5VkZsaWdCalVnPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNjY5NTM1OTk0LCJleHAiOjE2Njk2MjIzOTR9.RJeit-sc9oa79gDB6CZ2QNlH4NlD_fVMyZSQ5StknyQ
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJocHdQK2lwOFp6SmVNbzMyWkMwWmpGazI4K3dsZWU5MEV5VkZsaWdCalVnPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNjY5NjI2Mjc2LCJleHAiOjE2Njk3MTI2NzZ9.ugGuY1FoSzXRe73nKL0Wt_t0SicbZalC7-P5uqyXlxA
 
 {
-  "id": 17,
+  "id": 19,
   "sellerId": 1,
-  "name": "name!!~!",
-  "description": "description!!",
+  "name": "apple",
+  "description": "description",
   "items": [
     {
-      "id": 100,
-      "name": "productName!!!!",
+      "id": 50,
+      "name": "appleA",
       "count": 1,
-      "price": 100500
+      "price": 1000
     }
   ]
 }
+
+### 카트 조회
+GET http://localhost:8082/customer/cart
+Content-Type: application/json
+X_AUTH_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJocHdQK2lwOFp6SmVNbzMyWkMwWmpGazI4K3dsZWU5MEV5VkZsaWdCalVnPSIsImp0aSI6IjVlMy81S3JMU2NGY1JqOUNhQVVHWlE9PSIsInJvbGVzIjoiU0VMTEVSIiwiaWF0IjoxNjY5NjI2Mjc2LCJleHAiOjE2Njk3MTI2NzZ9.ugGuY1FoSzXRe73nKL0Wt_t0SicbZalC7-P5uqyXlxA

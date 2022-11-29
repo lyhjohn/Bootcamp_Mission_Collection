@@ -3,8 +3,8 @@ package com.zerobase.cms.order_api.controller;
 import com.zerobase.cms.order_api.application.CartApplication;
 import com.zerobase.cms.order_api.domain.product.AddProductCartForm;
 import com.zerobase.cms.order_api.domain.redis.Cart;
-import com.zerobase.cms.order_api.service.CartService;
 import com.zerobasedomain.config.JwtAuthenticationProvider;
+import io.swagger.annotations.ResponseHeader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/customer/cart")
 @RequiredArgsConstructor
-public class CustomCartController {
+public class CustomerCartController {
 
     private final CartApplication cartApplication;
     private final JwtAuthenticationProvider provider;
@@ -22,4 +22,10 @@ public class CustomCartController {
                                         @RequestHeader(name = "X_AUTH_TOKEN") String token) {
         return ResponseEntity.ok(cartApplication.addCart(provider.getUserVo(token).getId(), form));
     }
+
+    @GetMapping
+    public ResponseEntity<Cart> showCart(@RequestHeader(name = "X_AUTH_TOKEN") String token) {
+        return ResponseEntity.ok(cartApplication.getCart(provider.getUserVo(token).getId()));
+    }
+
 }

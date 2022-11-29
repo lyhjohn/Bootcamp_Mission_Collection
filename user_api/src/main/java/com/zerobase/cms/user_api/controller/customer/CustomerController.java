@@ -31,9 +31,8 @@ public class CustomerController {
 	public ResponseEntity<CustomerDto> getInfo(@RequestHeader(name = "X_AUTH_TOKEN") String token) {
 		System.out.println("token = " + token);
 		UserVo vo = provider.getUserVo(token);
-		Customer customer = customerService.findByIdAndEmail(vo.getId(), vo.getEmail())
-			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
-
+		System.out.println("vo = " + vo);
+		Customer customer = customerService.findByIdAndEmail(vo.getId(), vo.getEmail());
 		return ResponseEntity.ok(CustomerDto.from(customer));
 	}
 

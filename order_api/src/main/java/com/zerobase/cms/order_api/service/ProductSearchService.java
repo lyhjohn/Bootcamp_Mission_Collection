@@ -1,10 +1,8 @@
 package com.zerobase.cms.order_api.service;
 
 import com.zerobase.cms.order_api.domain.model.Product;
-import com.zerobase.cms.order_api.domain.repository.ProductItemRepository;
 import com.zerobase.cms.order_api.domain.repository.ProductRepository;
 import com.zerobase.cms.order_api.exception.CustomException;
-import com.zerobase.cms.order_api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,7 @@ public class ProductSearchService {
                 .orElseThrow(() -> new CustomException(NOT_FOUND_PRODUCT));
     }
 
-    public List<Product> getListProduct(List<Long> productIds) {
+    public List<Product> getProductList(List<Long> productIds) {
         return productRepository.findAllById(productIds);
     }
 }
