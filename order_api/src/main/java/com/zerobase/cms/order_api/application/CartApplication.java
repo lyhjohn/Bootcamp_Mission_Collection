@@ -53,6 +53,10 @@ public class CartApplication {
         return returnCart;
     }
 
+    public Cart updateCart(Long customerId, Cart cart) {
+        return cartService.putCart(customerId, cart);
+    }
+
     /**
      * Cart 새로고침
      */
@@ -67,42 +71,54 @@ public class CartApplication {
         Map<Long, Product> dbProductMap = productSearchService.getProductList(cartProducts).stream()
                 .collect(Collectors.toMap(Product::getId, product -> product));
 
-        cart.getProducts().forEach(cartProduct -> {
-            Product dbProduct = dbProductMap.get(cartProduct.getId());
+        List<Cart.Product> products = cart.getProducts();
+        for (int i = 0; i < products.size(); i++) {
+
+
+            Product dbProduct = dbProductMap.get(products.get(i).getId());
             if (dbProduct == null) {
-                cart.getProducts().remove(cartProduct);
-                cart.addMessage(cartProduct.getName() + " 상품은 남아있는 수량이 없어 장바구니에서 제거됩니다.");
+                cart.addMessage(products.get(i).getName() + " 상품은 남아있는 수량이 없어 장바구니에서 제거됩니다.");
+                products.remove(products.get(i));
+                i--;
             } else {
-                cartProduct.getItems().forEach(cartItem -> {
+                List<Cart.ProductItem> items = products.get(i).getItems();
+                for (int j = 0; j < items.size(); j++) {
+
+                    Cart.ProductItem productItem = items.get(j);
 
                     Map<Long, ProductItem> dbItemMap = dbProduct.getProductItemList().stream()
                             .collect(Collectors.toMap(ProductItem::getId, item -> item));
-                    ProductItem dbProductItem = dbItemMap.get(cartItem.getId());
-                    if (dbProductItem == null) {
-                        cartProduct.getItems().remove(cartItem);
-                        cart.addMessage(cartItem.getName() + " 남아있는 옵션 수량이 없어 장바구니에서 제거됩니다.");
-                    } else {
 
-                        boolean isPriceChanged = !cartItem.getPrice().equals(getDbItemPrice(dbItemMap, cartItem.getId()));
-                        boolean isCountNotEnough = cartItem.getCount() > getDbItemCount(dbItemMap, cartItem.getId());
+                    ProductItem dbProductItem = dbItemMap.get(productItem.getId());
+
+                    if (dbProductItem == null) {
+                        cart.addMessage(productItem.getName() + " 남아있는 옵션 수량이 없어 장바구니에서 제거됩니다.");
+                        items.remove(productItem);
+                        j--;
+                    } else {
+                        boolean isPriceChanged = !productItem.getPrice().equals(getDbItemPrice(dbItemMap, productItem.getId()));
+                        boolean isCountNotEnough = productItem.getCount() > getDbItemCount(dbItemMap, productItem.getId());
 
                         if (isPriceChanged && isCountNotEnough) {
-                            cartItem.setPrice(dbProductItem.getPrice());
-                            cartItem.setCount(dbProductItem.getCount());
-                            cart.addMessage(cartItem.getName() + "가격과 수량이 변동되었습니다.");
-                            cart.addMessage(cartItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
+                            productItem.setPrice(dbProductItem.getPrice());
+                            productItem.setCount(dbProductItem.getCount());
+                            cart.addMessage(productItem.getName() + "가격과 수량이 변동되었습니다.");
+                            cart.addMessage(productItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
+
                         } else if (isPriceChanged) {
-                            cart.addMessage(cartItem.getName() + "가격이 변동되었습니다.");
-                            cartItem.setPrice(dbProductItem.getPrice());
+                            cart.addMessage(productItem.getName() + "가격이 변동되었습니다.");
+                            productItem.setPrice(dbProductItem.getPrice());
+
                         } else if (isCountNotEnough) {
-                            cartItem.setCount(dbProductItem.getCount());
-                            cart.addMessage(cartItem.getName() + "수량이 변동되었습니다.");
-                            cart.addMessage(cartItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
+                            productItem.setCount(dbProductItem.getCount());
+                            cart.addMessage(productItem.getName() + "수량이 변동되었습니다.");
+                            cart.addMessage(productItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
                         }
                     }
-                });
+                }
             }
-        });
+
+        }
         return cartService.putCart(cart.getCustomerId(), cart);
     }
 
