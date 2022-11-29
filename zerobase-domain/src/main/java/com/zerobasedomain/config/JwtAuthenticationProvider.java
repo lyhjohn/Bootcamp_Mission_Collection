@@ -59,4 +59,10 @@ public class JwtAuthenticationProvider {
 		return new UserVo(Long.valueOf(Objects.requireNonNull(Aes256Util.decrypt(c.getId()))),
 			Aes256Util.decrypt(c.getSubject()));
 	}
+
+	public String getRoles(String token) {
+
+		Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+		return (String) claims.get("roles");
+	}
 }
