@@ -8,16 +8,24 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class CustomException extends RuntimeException {
 
 	private final ErrorCode errorCode;
 	private final int status;
+
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	public CustomException(ErrorCode errorCode) {
 		super(errorCode.getDetail());
 		this.errorCode = errorCode;
 		this.status = errorCode.getHttpStatus().value();
+	}
+
+	public CustomException(String message) {
+		super(ErrorCode.WRONG_PRICE.getDetail() + " " + message);
+		this.errorCode = ErrorCode.WRONG_PRICE;
+		status = 400;
 	}
 
 	@AllArgsConstructor

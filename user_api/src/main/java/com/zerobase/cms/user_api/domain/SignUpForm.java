@@ -1,12 +1,17 @@
 package com.zerobase.cms.user_api.domain;
 
-import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
+@Accessors(chain = true)
 public class SignUpForm {
 	private String email;
 	private String name;
@@ -23,3 +28,4 @@ public class SignUpForm {
 		this.phone = phone;
 	}
 }
+

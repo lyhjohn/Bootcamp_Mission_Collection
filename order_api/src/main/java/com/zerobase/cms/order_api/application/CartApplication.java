@@ -10,12 +10,11 @@ import com.zerobase.cms.order_api.service.ProductSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.zerobase.cms.order_api.exception.ErrorCode.*;
+import static com.zerobase.cms.order_api.exception.ErrorCode.ITEM_ENOUGH;
+import static com.zerobase.cms.order_api.exception.ErrorCode.NOT_FOUND_ITEM;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +33,85 @@ public class CartApplication {
         if (cart != null && !addAble(cart, product, form)) {
             throw new CustomException(ITEM_ENOUGH);
         }
-
         return cartService.addCart(customerId, form);
+    }
+
+    public Cart getCart(Long customerId) {
+        Cart cart = refreshCart(cartService.getCart(customerId));
+        Cart returnCart = new Cart();
+        returnCart.setCustomerId(customerId);
+        returnCart.setProducts(cart.getProducts());
+        returnCart.setMessages(cart.getMessages());
+        returnCart.setTotalPrice(cartService.getTotalPrice(cart));
+        cart.setMessages(new ArrayList<>());
+
+        // redis에 저장
+        cartService.putCart(customerId, cart);
+
+        // returnCart 객체를 만들어 반환하고
+        // redis에 저장되는 Cart의 message는 비워준다.
+        return returnCart;
+    }
+
+    /**
+     * Cart 새로고침
+     */
+    private Cart refreshCart(Cart cart) {
+        // 1. 상품이나 상품의 아이템의 정보, 가격, 수량 변경 체크 후 그에 맞는 알림 제공
+        // 2. 변경된 상품의 수량, 가격을 db 반영
+
+        // Cart 에 담은 Product id로 List 만든다.
+        List<Long> cartProducts = cart.getProducts().stream().map(Cart.Product::getId).collect(Collectors.toList());
+
+        // 장바구니에 담긴 모든 Product를 엔티티에서 꺼내온다.
+        Map<Long, Product> dbProductMap = productSearchService.getProductList(cartProducts).stream()
+                .collect(Collectors.toMap(Product::getId, product -> product));
+
+        cart.getProducts().forEach(cartProduct -> {
+            Product dbProduct = dbProductMap.get(cartProduct.getId());
+            if (dbProduct == null) {
+                cart.getProducts().remove(cartProduct);
+                cart.addMessage(cartProduct.getName() + " 상품은 남아있는 수량이 없어 장바구니에서 제거됩니다.");
+            } else {
+                cartProduct.getItems().forEach(cartItem -> {
+
+                    Map<Long, ProductItem> dbItemMap = dbProduct.getProductItemList().stream()
+                            .collect(Collectors.toMap(ProductItem::getId, item -> item));
+                    ProductItem dbProductItem = dbItemMap.get(cartItem.getId());
+                    if (dbProductItem == null) {
+                        cartProduct.getItems().remove(cartItem);
+                        cart.addMessage(cartItem.getName() + " 남아있는 옵션 수량이 없어 장바구니에서 제거됩니다.");
+                    } else {
+
+                        boolean isPriceChanged = !cartItem.getPrice().equals(getDbItemPrice(dbItemMap, cartItem.getId()));
+                        boolean isCountNotEnough = cartItem.getCount() > getDbItemCount(dbItemMap, cartItem.getId());
+
+                        if (isPriceChanged && isCountNotEnough) {
+                            cartItem.setPrice(dbProductItem.getPrice());
+                            cartItem.setCount(dbProductItem.getCount());
+                            cart.addMessage(cartItem.getName() + "가격과 수량이 변동되었습니다.");
+                            cart.addMessage(cartItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
+                        } else if (isPriceChanged) {
+                            cart.addMessage(cartItem.getName() + "가격이 변동되었습니다.");
+                            cartItem.setPrice(dbProductItem.getPrice());
+                        } else if (isCountNotEnough) {
+                            cartItem.setCount(dbProductItem.getCount());
+                            cart.addMessage(cartItem.getName() + "수량이 변동되었습니다.");
+                            cart.addMessage(cartItem.getName() + "장바구니에 담은 수량이 부족하여 최대치로 조정됩니다.");
+                        }
+                    }
+                });
+            }
+        });
+        return cartService.putCart(cart.getCustomerId(), cart);
+    }
+
+    private int getDbItemPrice(Map<Long, ProductItem> redisItemMap, Long itemId) {
+        return redisItemMap.get(itemId).getPrice();
+    }
+
+    private int getDbItemCount(Map<Long, ProductItem> redisItemMap, Long itemId) {
+        return redisItemMap.get(itemId).getCount();
     }
 
     private boolean addAble(Cart cart, Product product, AddProductCartForm form) {
@@ -48,7 +124,7 @@ public class CartApplication {
 
         Map<Long, Integer> cartItemCountMap = new HashMap<>();
 
-        // Map으로 하는 이유는 속도 때문!
+        // List 보다 Map으로 하는 이유는 속도 때문!
         // Cart에 해당 Product가 이미 담겨있는 경우, Product의 수량을 Map으료 표시함
         if (optionalProduct.isPresent()) {
             Cart.Product cartProduct = optionalProduct.get();

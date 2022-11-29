@@ -3,11 +3,15 @@ package com.zerobase.cms.order_api.service;
 import com.zerobase.cms.order_api.client.RedisClient;
 import com.zerobase.cms.order_api.domain.product.AddProductCartForm;
 import com.zerobase.cms.order_api.domain.redis.Cart;
+import com.zerobase.cms.order_api.domain.repository.ProductItemRepository;
+import com.zerobase.cms.order_api.exception.CustomException;
+import com.zerobase.cms.order_api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,10 +24,17 @@ import java.util.stream.Collectors;
 public class CartService {
 
     private final RedisClient redisClient;
+    private final ProductItemRepository productItemRepository;
     private int totalPrice = 0;
 
     public Cart getCart(Long customerId) {
-        return redisClient.get(customerId, Cart.class);
+        Cart cart = redisClient.get(customerId, Cart.class);
+        return cart != null ? cart : new Cart();
+    }
+
+    public Cart putCart(Long customerId, Cart cart) {
+        redisClient.put(customerId, cart);
+        return cart;
     }
 
     @Transactional
@@ -31,6 +42,7 @@ public class CartService {
 
         // redis 서버로부터 PK(customerId)에 해당하는 Cart 데이터를 가져온다.
         Cart cart = redisClient.get(customerId, Cart.class);
+        cart.setMessages(new ArrayList<>());
 
         // redis 서버에 고객 소유의 Cart가 없으면 새로 객체를 생성해준다. (1인 최대 1 Cart)
         if (cart == null) {
@@ -70,34 +82,38 @@ public class CartService {
                     // happy case - 기존 장바구니에 있는 것과 새로 담은 ProductItem이 겹치지 않는 경우
                     redisProduct.getItems().add(item);
 
-                } else { // 기존 장바구니에 있는 ProductItem과 새로 담은 것은 아이템이 같을 경우
+                } else { // 기존 장바구니에 있는 ProductItem과 새로 담은 아이템이 같을 경우
                     // 가격이 다르다면
                     if (!redisItem.getPrice().equals(item.getPrice())) {
-                        cart.addMessage(item.getName() + "의 가격이 " + item.getPrice() + "으로 변경되었습니다.");
-                        redisItem.setPrice(item.getPrice());
+                        Integer price = productItemRepository.findById(redisItem.getId()).get().getPrice();
+                        throw new CustomException("추가하는 상품의 금액은 " + price + "원 입니다.");
+//                        cart.addMessage(item.getName() + "의 가격이 " + item.getPrice() + "으로 변경되었습니다.");
+//                        redisItem.setPrice(item.getPrice());
                     }
                     // 장바구니에 담긴 아이템 수량 증가
                     redisItem.setCount(redisItem.getCount() + item.getCount());
-                }
-                List<Cart.Product> products = cart.getProducts();
-                for (Cart.Product product : products) {
-                    product.getItems().forEach(x -> {
-                        totalPrice += x.getPrice() * x.getCount();
-                    });
                 }
             }
         } else {
             // 고객 소유의 Cart가 redis서버에 없거나 이전에 같은 상품을 장바구니에 담은적이 없는 경우
             Cart.Product product = Cart.Product.from(form);
             cart.getProducts().add(product);
-            form.getItems().forEach(x -> {
-                totalPrice += x.getPrice() * x.getCount();
-            });
         }
 
-        cart.setTotalPrice(totalPrice);
+        cart.setTotalPrice(getTotalPrice(cart));
         // redis 서버에 Cart 데이터 반영
         redisClient.put(customerId, cart);
         return cart;
+    }
+
+    public int getTotalPrice(Cart cart) {
+        int totalPrice = 0;
+        for (Cart.Product product : cart.getProducts()) {
+            for (Cart.ProductItem item : product.getItems()) {
+                totalPrice += item.getPrice() * item.getCount();
+                System.out.println("totalPrice = " + totalPrice);
+            }
+        }
+        return totalPrice;
     }
 }

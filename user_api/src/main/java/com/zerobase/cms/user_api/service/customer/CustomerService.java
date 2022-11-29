@@ -7,6 +7,8 @@ import com.zerobase.cms.user_api.domain.model.Customer;
 import com.zerobase.cms.user_api.domain.repository.customer.CustomerRepository;
 import com.zerobase.cms.user_api.exception.CustomException;
 import java.util.Optional;
+
+import com.zerobase.cms.user_api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,11 @@ public class CustomerService {
 
 	private final CustomerRepository customerRepository;
 
-	public Optional<Customer> findByIdAndEmail(Long id, String email) {
+	public Customer findByIdAndEmail(Long id, String email) {
 		return customerRepository.findById(id)
 			.stream()
-			.filter(x -> x.getEmail().equals(email)).findFirst();
+			.filter(x -> x.getEmail().equals(email)).findFirst()
+				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 	}
 
 	public Customer findValidCustomerByEmailAndPassword(String email, String password) {

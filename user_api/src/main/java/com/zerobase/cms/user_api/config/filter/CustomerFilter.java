@@ -23,14 +23,16 @@ public class CustomerFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		throws IOException, ServletException {
+		System.out.println("토큰 만료 검증");
 		HttpServletRequest req = (HttpServletRequest) request;
 		String token = req.getHeader("X_AUTH_TOKEN");
+		System.out.println("token = " + token);
 		if (!jwtAuthenticationProvider.validateToken(token)) {
 			throw new ServletException("Invalid Access");
 		}
 		UserVo vo = jwtAuthenticationProvider.getUserVo(token);
-		customerService.findByIdAndEmail(vo.getId(), vo.getEmail())
-			.orElseThrow(() -> new ServletException("Invalid Access"));
+		customerService.findByIdAndEmail(vo.getId(), vo.getEmail());
+//			.orElseThrow(() -> new ServletException("Invalid Access"));
 
 		chain.doFilter(request, response);
 	}

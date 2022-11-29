@@ -3,9 +3,13 @@ package com.zerobase.cms.user_api.domain.customer;
 import com.zerobase.cms.user_api.domain.model.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
 public class CustomerDto {
 
 	private Long id;
