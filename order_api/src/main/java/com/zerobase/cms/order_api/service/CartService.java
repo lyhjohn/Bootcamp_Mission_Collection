@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -107,13 +108,27 @@ public class CartService {
     }
 
     public int getTotalPrice(Cart cart) {
-        int totalPrice = 0;
-        for (Cart.Product product : cart.getProducts()) {
-            for (Cart.ProductItem item : product.getItems()) {
-                totalPrice += item.getPrice() * item.getCount();
-                System.out.println("totalPrice = " + totalPrice);
-            }
-        }
-        return totalPrice;
+
+        // flat: 각 product 마다의 item price를 한 데 모아 모~~~두 더해버림(평탄화)
+        int sum = cart.getProducts().stream()
+                .flatMapToInt(product -> product.getItems().stream()
+                        .flatMapToInt(item -> IntStream.of(item.getPrice() * item.getCount()))).sum();
+
+        System.out.println("sum = " + sum);
+
+        // 각 product 마다 item price 합을 개별로 더하고 마지막에 모든 product에 있는 price를 한곳에 모아 한번 더 더해줌
+        int sum1 = cart.getProducts().stream()
+                .mapToInt(product -> product.getItems().stream()
+                        .mapToInt(item -> item.getPrice() * item.getCount()).sum()).sum();
+
+        System.out.println("sum1 = " + sum1);
+
+//        for (Cart.Product product : cart.getProducts()) {
+//            for (Cart.ProductItem item : product.getItems()) {
+//                totalPrice += item.getPrice() * item.getCount();
+//                System.out.println("totalPrice = " + totalPrice);
+//            }
+//        }
+        return sum;
     }
 }

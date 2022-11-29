@@ -38,11 +38,12 @@ public class CartApplication {
 
     public Cart getCart(Long customerId) {
         Cart cart = refreshCart(cartService.getCart(customerId));
+        cartService.putCart(cart.getCustomerId(), cart);
         Cart returnCart = new Cart();
         returnCart.setCustomerId(customerId);
         returnCart.setProducts(cart.getProducts());
         returnCart.setMessages(cart.getMessages());
-        returnCart.setTotalPrice(cartService.getTotalPrice(cart));
+        returnCart.setTotalPrice(getTotalPrice(cart));
         cart.setMessages(new ArrayList<>());
 
         // redis에 저장
@@ -60,7 +61,7 @@ public class CartApplication {
     /**
      * Cart 새로고침
      */
-    private Cart refreshCart(Cart cart) {
+    public Cart refreshCart(Cart cart) {
         // 1. 상품이나 상품의 아이템의 정보, 가격, 수량 변경 체크 후 그에 맞는 알림 제공
         // 2. 변경된 상품의 수량, 가격을 db 반영
 
@@ -119,7 +120,7 @@ public class CartApplication {
             }
 
         }
-        return cartService.putCart(cart.getCustomerId(), cart);
+        return cart;
     }
 
     private int getDbItemPrice(Map<Long, ProductItem> redisItemMap, Long itemId) {
@@ -167,5 +168,9 @@ public class CartApplication {
                     }
                     return formItem.getCount() + cartCount >= currentCount;
                 });
+    }
+
+    public int getTotalPrice(Cart cart) {
+        return cartService.getTotalPrice(cart);
     }
 }

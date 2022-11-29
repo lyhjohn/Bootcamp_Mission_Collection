@@ -26,6 +26,16 @@ public class ProductItemService {
     private final ProductItemRepository productItemRepository;
     private final ProductRepository productRepository;
 
+    public ProductItem getProductItem(Long id) {
+        return productItemRepository.findById(id)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_ITEM));
+    }
+
+    @Transactional
+    public ProductItem saveProductItem(ProductItem productItem) {
+        return productItemRepository.save(productItem);
+    }
+
     @Transactional
     public ProductItem addProductItem(Long sellerId, AddProductItemForm form) {
         Product product = productRepository.findBySellerIdAndId(sellerId, form.getProductId())
