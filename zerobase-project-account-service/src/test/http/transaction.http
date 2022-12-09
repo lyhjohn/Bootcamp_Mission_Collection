@@ -1,0 +1,34 @@
+### use balance
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": "1000000000",
+  "amount": 500
+}
+
+
+### use balance2
+POST http://localhost:8080/transaction/use
+//동일한 계좌로 거래 1, 2를 동시에 수행하면 LOCK 걸림
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": "1000000000",
+  "amount": 100
+}
+
+### use cancel
+POST http://localhost:8080/transaction/cancel
+Content-Type: application/json
+
+{
+  "transactionId": "f54c361604c64867945fcb8872b81984",
+  "accountNumber": "1000000000",
+  "amount": 500
+}
+
+### query transaction
+GET http://localhost:8080/transaction/8eb2044f3863418799403a9ce4a5893f
