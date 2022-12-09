@@ -1,0 +1,25 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://localhost:3306/user?userSSL=false&userUnicode=true&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: yohan
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8081
+
+feign:
+  okhttp:
+    enabled: true
+
+
