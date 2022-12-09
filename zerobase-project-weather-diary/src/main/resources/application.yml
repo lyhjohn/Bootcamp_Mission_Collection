@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/weather_project
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: projectUser
+    password: yohan
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+    #        format_sql: true
+    generate-ddl: true
+  #    테이블 자동생성 여부
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+openweathermap:
+  key: 95020931ec8f44ab98b9db15c0ae956c
+
+
+logging:
+  file:
+    path: logback-spring.xml
+#    max-size: 500MB
+#    max-history: 10
+#  level:
+#    root: info
+#    me.hong.kotlinspring: debug
+
+
+
+
+
+
+
+
+
+
+
