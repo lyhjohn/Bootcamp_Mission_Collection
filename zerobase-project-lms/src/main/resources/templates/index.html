@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+
+</head>
+<body>
+<h1>메인 페이지</h1>
+<div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
+<hr/>
+<div th:if="${#lists.size(bannerList) < 1}">
+    <p>배너가 없습니다.</p>
+</div>
+
+<div th:each="banner : ${bannerList}" class="slider">
+    <div th:if="|${banner.openPublicYn eq true}|">
+
+        <a th:if="|${banner.open.equals('new')}|" th:href="${banner.url}" target="_blank">
+            <img th:src="${banner.urlFilename}" width="200" height="200" alt="배너 이미지"></a>
+
+        <a th:if="|${banner.open.equals('')}|" th:href="${banner.url}" target="_blank">
+            <img th:src="${banner.urlFilename}" width="200" height="200" alt="배너 이미지"></a>
+
+        <a th:if="|${banner.open.equals('notNew')}|" th:href="${banner.url}">
+            <img th:src="${banner.urlFilename}" width="200" height="200" alt="배너 이미지"></a>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.bxslider').bxSlider({
+            mode: 'fade',
+            captions: true,
+            slideWidth: 800
+        });
+    });
+
+</script>
+</body>
+</html>

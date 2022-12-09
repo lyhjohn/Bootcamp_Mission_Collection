@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+<div th:if="${result}">
+    <h1>회원 가입 완료</h1>
+    <div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
+    <hr>
+    <p>입력하신 메일 주소로 인증 메일을 전송했습니다.</p>
+</div>
+
+<div th:if="${result eq false}">
+    <h1>회원 가입 결과</h1>
+    <div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
+    <hr>
+    <p>회원 가입에 실패하였습니다.</p>
+</div>
+
+</body>
+</html>

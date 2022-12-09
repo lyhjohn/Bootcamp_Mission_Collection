@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 강의 관리</title>
+    <style>
+        .list table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid #444444;
+        }
+
+        .pager {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .list .button {
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .list .button a, .list .button button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 16px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .list .button .total-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#selectAll').on('click', function () {
+                    var checked = $(this).is(':checked');
+                    $('#dataList input[type=checkbox]').each(function (k, v) {
+                        $(this).prop('checked', checked);
+                    });
+                }
+            );
+
+            $('#deleteButton').on('click', function () {
+                var $checked = $('#dataList input[type=checkbox]:checked')
+                if ($checked.length < 1) {
+                    alert('삭제할 강의를 선택해 주세요');
+                    return false;
+                }
+
+                if (!confirm('선택한 강의를 정말 삭제하시겠습니까?')) {
+                    return false;
+                }
+
+                var idList = [];
+
+                $.each($checked, function (k, v) {
+                    console.log($(this).val());
+                    idList.push($(this).val()); // 체크된걸 idList에 담음
+                });
+                console.log(idList); // 배열
+                console.log(idList.join(',')) // 배열을 문자로 출력
+
+                var $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val(idList.join(',')); // 배열 사이사이에 컴마를 넣어 String으로 만듬
+                $deleteForm.submit();
+            })
+        });
+    </script>
+</head>
+<body>
+<h1>강의 관리</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<div class="list">
+    <div class="button">
+        <p class="total-count"><span th:text="|검색결과: 총 ${totalCount}개|"></span></p>
+        <a href="/admin/course/add.do">강의 등록</a>
+        <button type="button" id="deleteButton"> 선택 삭제</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="selectAll">
+            </th>
+            <th>NO</th>
+            <th>강의명</th>
+            <th>등록일</th>
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="course : ${courses}">
+            <td>
+                <input type="checkbox" th:value="${course.id}">
+            </td>
+            <td th:text="${course.seq}"></td>
+            <td>
+                <p>
+                    <a th:href="@{edit.do(id=${course.id})}" th:text="${course.subject}"></a>
+                </p>
+            </td>
+            <td th:text="${course.regDt}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pager" th:utext="${pager}"></div>
+</div>
+
+<form name="deleteForm" action="/admin/course/delete.do" method="post">
+    <input type="hidden" name="idList">
+    <button type="submit">삭제</button>
+</form>
+
+</body>
+</html>

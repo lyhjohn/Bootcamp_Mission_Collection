@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+
+    <style>
+        .list table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid #444444;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+
+
+            $('.row-buttons button').on('click', function() {
+
+                var id = $(this).val();
+
+                var msg = '수강취소 처리 하시겠습니까?';
+                if (!confirm(msg)) {
+                    return false;
+                }
+
+                var url = '/api/member/course/cancel.api';
+                var parameter = {
+                    takeCourseId: id
+                };
+                axios.post(url, parameter).then(function(response) {
+                    console.log(response);
+                    console.log(response.data);
+
+                    response.data = response.data || {};
+                    response.data.header = response.data.header || {};
+
+                    if (!response.data.header.result) {
+                        alert(response.data.header.message);
+                        return false;
+                    }
+
+                    //정상적일때
+                    alert(' 강좌가 정상적으로 취소되었습니다. ');
+                    (location || window.location || document.location).reload();
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
+
+                return false;
+
+
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+<h1>회원 정보</h1>
+<div th:replace="~{/fragment/member/layout :: fragment-body-menu}"></div>
+<div>
+    <a href="/member/info">회원 정보 수정</a>
+    |
+    <a href="/member/password">비밀번호 변경</a>
+    |
+    <a href="/member/takecourse">내 수강 목록</a>
+</div>
+<br>
+<div class="list">
+    <table>
+        <thead>
+        <tr>
+            <th>NO</th>
+            <th>강의명</th>
+            <th>등록일</th>
+            <th>상태</th>
+            <th>비고</th>
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="course, i : ${courses}">
+            <td th:text="${i.index + 1}"></td>
+            <td>
+                <a th:text="${course.subject}"></a>
+            </td>
+            <td>
+                <p th:text="${course.regDtText}"></p>
+            </td>
+            <td>
+                <p th:if="${course.status.equals('REQ')}"><span>신청 완료</span></p>
+                <p th:if="${course.status.equals('CANCEL')}"><span>수강 취소</span></p>
+                <p th:if="${course.status.equals('COMPLETE')}"><span>결제 완료</span></p>
+            </td>
+            <td>
+                <p class="row-buttons" th:if="${course.status.equals('REQ')}">
+                    <button th:value="${course.id}" type="button">수강취소 처리</button>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

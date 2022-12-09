@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 회원 관리</title>
+    <style>
+        .detail table {
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+
+        .history table th {
+            background-color: black;
+            color: white;
+        }
+
+        .history table {
+            border-color: white;
+            width: 100%;
+            border-collapse: separate;
+            background-color: grey;
+        }
+
+        .history table tbody #number {
+            text-align: center;
+        }
+
+        .detail table th, .detail table td {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+<h1>관리자 - 회원 상세 정보</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<div class="detail" th:object="${member}">
+    <table>
+        <tbody>
+        <tr>
+            <th>이메일</th>
+            <td>
+                <p th:text="${member.email}"></p>
+            </td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td>
+                <p th:text="${member.userName}"></p>
+            </td>
+        </tr>
+        <tr>
+            <th>연락처</th>
+            <td>
+                <p th:text="${member.phone}"></p>
+            </td>
+        </tr>
+        <tr>
+            <th>가입일</th>
+            <td>
+                <p th:text="${member.regDt}"></p>
+            </td>
+        </tr>
+        <tr>
+            <th>이메일 인증</th>
+            <td>
+                <p th:if="${member.emailAuthYn}">인증 완료</p>
+                <p th:if="${!member.emailAuthYn}">인증 미완료</p>
+            </td>
+        </tr>
+        <tr>
+            <th>관리자 여부</th>
+            <td>
+                <p th:if="${member.adminYn}">Yes</p>
+                <p th:if="${!member.adminYn}">No</p>
+            </td>
+        </tr>
+        <tr>
+            <th>회원 상태</th>
+            <td>
+                <p th:text="|현재상태: ${member.userStatus}|"></p>
+                <form action="/admin/member/status.do" method="post">
+                    <input type="hidden" th:value="${member.email}" name="email">
+                    <!--                    form submit 할 때 email 값도 보내기 위해서 hidden으로 만듬-->
+                    <select name="userStatus">
+                        <option value="SUBMIT">가입승인중</option>
+                        <option value="NORMAL">정상이용중</option>
+                        <option value="STOP">정지</option>
+                    </select>
+                    <button type="submit">변경</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <th>비밀번호 변경</th>
+            <td>
+                <form action="/admin/member/password.do" method="post">
+                    <input type="hidden" th:value="${member.email}" name="email">
+                    <input type="password" name="password">
+                    <button type="submit">비밀번호 변경</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <div>
+        <a href="list.do">목록</a>
+        <!--        /list.do : 루트경로에서 list.do로 가는 절대경로
+                    list.do : 현재 위치 /member에서 이동하는 상대경로 /member/list.do-->
+    </div>
+</div>
+
+<div th:object="${member}" class="history">
+    <table>
+        <thead>
+        <tr>
+            <th>NO (최근 5건)</th>
+            <th>로그인 일자</th>
+            <th>접속 IP</th>
+            <th>접속 UserAgent</th>
+        </tr>
+        </thead>
+        <tbody th:each="history, i : *{historyList}" th:if="${i.index < 5}">
+        <tr>
+            <td>
+                <p th:text="|${member.historyList.size() - i.index}|" id="number"></p>
+            </td>
+            <td>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].getLoginDtText()}|"></p>
+            </td>
+            <td>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].ip}|"></p>
+            </td>
+            <td>
+                <p th:text="|${member.historyList[member.historyList.size() - 1 - i.index].userAgent}|"></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

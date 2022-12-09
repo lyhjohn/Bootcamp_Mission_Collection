@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/fastims
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: main
+    password: yohan
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+         show_sql: true
+#        format_sql: true
+    generate-ddl: true
+#    테이블 자동생성 여부
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dladygks506@gmail.com
+    password: mtgbztbqtpqobuko
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+  messages:
+    basename: messages, error
+logging:
+  level:
+    root: info
+
+mybatis:
+  mapper-locations: mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true # 언더바를 카멜 표기법으로 변환
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 로그 찍기
+
+  

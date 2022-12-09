@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 회원 관리</title>
+    <style>
+        .list table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: 1px solid #444444;
+        }
+
+        .search-form {
+            position: relative;
+            padding: 5px 0 10px 0;
+            text-align: right;
+        }
+
+        .search-form .total-count {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 20%;
+            float: left;
+        }
+
+        .pager {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .pager a.on {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>회원 관리</h1>
+<div th:replace="~{/fragment/admin/header :: header}">관리자 헤더</div>
+<br>
+
+<div class="list">
+    <!--    <div th:text="${param.searchType}"></div>-->
+    <!--    <div th:text="${param.searchValue}"></div>-->
+    <div class="search-form">
+        <p class="total-count"><span th:text="|검색결과: 총 ${totalCount}개|"></span></p>
+        <form method="get">
+            <select name="searchType">
+                <option value="all">전체</option>
+                <option value="email" th:selected="${#strings.equals(param.searchType, 'email')}">이메일</option>
+                <option value="userName" th:selected="${#strings.equals(param.searchType, 'userName')}">이름</option>
+                <option value="phone" th:selected="${#strings.equals(param.searchType, 'phone')}">연락처</option>
+            </select>
+
+            <input type="search" name="searchValue" th:value="${param.searchValue}" placeholder="검색어 입력">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th th:text="#{memberEmail}"></th>
+            <th th:text="#{memberName}"></th>
+            <th th:text="#{memberPhone}"></th>
+            <th th:text="#{emailAuthYn}"></th>
+            <th th:text="#{memberRegDt}"></th>
+            <th th:text="#{adminYn}"></th>
+            <th th:text="#{memberStatus}"></th>
+            <th th:text="#{lastLoginDt}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.getSeq()}"></td>
+            <td>
+                <a th:text="${member.email}"
+                   th:href="@{/admin/member/detail.do(email=${member.email})}"></a>
+            </td>
+            <td th:text="${member.userName}"></td>
+            <td th:text="${member.phone}"></td>
+            <td>
+                <p th:if="${member.emailAuthYn}">Y</p>
+                <p th:if="${member.emailAuthYn eq false}">N</p>
+            </td>
+            <td th:text="${member.regDt}"></td>
+            <td>
+                <p th:if="${member.adminYn}">Y</p>
+                <p th:if="${member.adminYn eq false}">N</p>
+            </td>
+            <td>
+                <p th:if="${member.userStatus == 'NORMAL'}">정상</p>
+                <p th:if="${member.userStatus == 'SUBMIT'}">가입승인중</p>
+                <p th:if="${member.userStatus == 'STOP'}">정지</p>
+            </td>
+            <td>
+                <p th:text="|${member.historyList[member.historyList.size() - 1].getLoginDtText()}|"></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pager" th:utext="${pager}"></div>
+</div>
+</body>
+</html>
